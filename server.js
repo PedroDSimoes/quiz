@@ -7,6 +7,10 @@ const dotenv = require('dotenv');
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const bcrypt = require('bcrypt');
+const pgConfig = require('./pgconfig');
+const helmet = require('helmet');
+const { body, validationResult } = require('express-validator');
+
 
 dotenv.config();
 
@@ -15,13 +19,9 @@ const port = 8001;
 
 app.use(cors());
 
-const pool = new Pool({
-    user: 'postgres',
-    host: 'localhost',
-    database: 'quiz',
-    password: 'none',
-    port: 5432, // Change this to your PostgreSQL port if necessary
-  });
+app.use(helmet());
+
+const pool = new Pool(pgConfig);
 
 app.use(bodyParser.json());
 
@@ -120,13 +120,19 @@ app.get('/quiz/questions', async (req, res) => {
     }
   });
   
-  app.post('/register', (req, res) => {
-    const { username, email, password } = req.body;
-  
-    // Check if any of the required fields are missing
-    if (!username || !email || !password) {
-      return res.status(400).json({ error: 'Username, email, and password are required.' });
+  app.post('/register', [
+    body('username').isString().isLength({ min: 5 }).withMessage('Username must be at least 5 characters.'),
+    body('email').isEmail().normalizeEmail(),
+    body('password').isLength({ min: 8 }).withMessage('Password must be at least 8 characters.')
+      .matches(/\d/).withMessage('Password must contain at least one numeric digit.'),
+  ], (req, res) => {
+    // Check for validation errors
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
     }
+  
+    const { username, email, password } = req.body;
   
     // Check if the username already exists in the database
     pool.query('SELECT * FROM users WHERE username = $1', [username], (error, result) => {
@@ -215,53 +221,60 @@ passport.use(
     });
   });
 
-  app.post('/login', (req, res) => {
-    const { username, password } = req.body;
-  
-    // Check if any of the required fields are missing
-    if (!username || !password) {
-      return res.status(400).json({ error: 'Username and password are required.' });
-    }
-  
-    // Fetch the user from the database based on the provided username
-    pool.query('SELECT * FROM users WHERE username = $1', [username], (error, result) => {
-      if (error) {
-        console.error('Error executing query:', error);
-        return res.status(500).json({ error: 'Internal server error.' });
+  app.post(
+    '/login',
+    [
+      body('username').notEmpty().withMessage('Username is required.'),
+      body('password').notEmpty().withMessage('Password is required.'),
+    ],
+    (req, res) => {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
       }
   
-      if (result.rows.length === 0) {
-        return res.status(401).json({ error: 'Invalid username or password.' });
-      }
+      const { username, password } = req.body;
   
-      const user = result.rows[0];
-  
-      // Compare the provided password with the hashed password from the database using bcrypt.compare
-      bcrypt.compare(password, user.password, (err, isMatch) => {
-        if (err) {
-          console.error('Error comparing passwords:', err);
+      // Fetch the user from the database based on the provided username
+      pool.query('SELECT * FROM users WHERE username = $1', [username], (error, result) => {
+        if (error) {
+          console.error('Error executing query:', error);
           return res.status(500).json({ error: 'Internal server error.' });
         }
   
-        if (isMatch) {
-          // Passwords match, user authenticated
-          // Store user data in the session
-          req.session.user = {
-            user_id: user.user_id,
-            username: user.username,
-            // Include any additional user data that you might need in the session
-          };
-  
-          req.session.authenticated = true;
-  
-          return res.status(200).json({ message: 'Login successful.', user_id: user.user_id });
-        } else {
-          // Passwords do not match
+        if (result.rows.length === 0) {
           return res.status(401).json({ error: 'Invalid username or password.' });
         }
+  
+        const user = result.rows[0];
+  
+        // Compare the provided password with the hashed password from the database using bcrypt.compare
+        bcrypt.compare(password, user.password, (err, isMatch) => {
+          if (err) {
+            console.error('Error comparing passwords:', err);
+            return res.status(500).json({ error: 'Internal server error.' });
+          }
+  
+          if (isMatch) {
+            // Passwords match, user authenticated
+            // Store user data in the session
+            req.session.user = {
+              user_id: user.user_id,
+              username: user.username,
+              // Include any additional user data that you might need in the session
+            };
+  
+            req.session.authenticated = true;
+  
+            return res.status(200).json({ message: 'Login successful.', user_id: user.user_id });
+          } else {
+            // Passwords do not match
+            return res.status(401).json({ error: 'Invalid username or password.' });
+          }
+        });
       });
-    });
-  });
+    }
+  );
 
   app.get('/logout', (req, res) => {
     // Perform any other operations related to logout if needed

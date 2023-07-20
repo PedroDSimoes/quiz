@@ -4,32 +4,39 @@ import { loginUser } from '../actions';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-
 const FrontPage = () => {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [registrationError, setRegistrationError] = useState('');
+  const [registrationSuccess, setRegistrationSuccess] = useState(false);
+  const [loginError, setLoginError] = useState('');
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleRegister = () => {
-    // Make a POST request to the backend API for user registration
     axios
       .post('http://localhost:8001/register', { username, email, password })
       .then((response) => {
         console.log(response.data);
+        setRegistrationSuccess(true); // Set the registration success message state
+        setRegistrationError(''); // Clear any previous registration errors
         // Dispatch an action to your Redux store for login, if needed
         // dispatch(loginUser(response.data));
       })
       .catch((error) => {
         console.error(error);
-        // Handle registration error
+        if (error.response && error.response.data && error.response.data.errors) {
+          setRegistrationError(error.response.data.errors[0].msg);
+        } else {
+          setRegistrationError('Registration failed. Please try again later.');
+        }
+        setRegistrationSuccess(false); // Registration failed, reset the registration success message
       });
   };
 
   const handleLogin = () => {
-    // Make a POST request to the backend API for user login
     axios
       .post('http://localhost:8001/login', { username, password })
       .then((response) => {
@@ -40,7 +47,11 @@ const FrontPage = () => {
       })
       .catch((error) => {
         console.error(error);
-        // Handle login error
+        if (error.response && error.response.data && error.response.data.errors) {
+          setLoginError(error.response.data.errors[0].msg);
+        } else {
+          setLoginError('Login failed. Please check your credentials and try again.');
+        }
       });
   };
 
@@ -49,6 +60,8 @@ const FrontPage = () => {
       <h1>Welcome to the Quiz App!</h1>
       <div>
         <h2>Register</h2>
+        {registrationSuccess && <p style={{ color: 'green' }}>Registration successful!</p>}
+        {registrationError && <p style={{ color: 'red' }}>{registrationError}</p>}
         <input
           type="text"
           placeholder="Username"
@@ -72,6 +85,7 @@ const FrontPage = () => {
 
       <div>
         <h2>Login</h2>
+        {loginError && <p style={{ color: 'red' }}>{loginError}</p>}
         <input
           type="text"
           placeholder="Username"
