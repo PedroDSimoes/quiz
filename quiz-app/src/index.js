@@ -9,8 +9,8 @@ import App from './App';
 const store = createStore(rootReducer);
 
 ReactDOM.render(
-  <Provider store={store}>
+  <React.StrictMode>
     <App />
-  </Provider>,
+  </React.StrictMode>,
   document.getElementById('root')
 );

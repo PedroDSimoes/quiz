@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { loginUser } from '../actions';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+
 
 const FrontPage = () => {
   const [username, setUsername] = useState('');
@@ -8,15 +11,37 @@ const FrontPage = () => {
   const [password, setPassword] = useState('');
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleRegister = () => {
-    // Handle registration logic here
-    // You can dispatch an action to your Redux store for registration
+    // Make a POST request to the backend API for user registration
+    axios
+      .post('http://localhost:8001/register', { username, email, password })
+      .then((response) => {
+        console.log(response.data);
+        // Dispatch an action to your Redux store for login, if needed
+        // dispatch(loginUser(response.data));
+      })
+      .catch((error) => {
+        console.error(error);
+        // Handle registration error
+      });
   };
 
   const handleLogin = () => {
-    // Handle login logic here
-    // You can dispatch an action to your Redux store for login
+    // Make a POST request to the backend API for user login
+    axios
+      .post('http://localhost:8001/login', { username, password })
+      .then((response) => {
+        console.log(response.data);
+        navigate('/main');
+        // Dispatch an action to your Redux store for login, if needed
+        // dispatch(loginUser(response.data));
+      })
+      .catch((error) => {
+        console.error(error);
+        // Handle login error
+      });
   };
 
   return (
