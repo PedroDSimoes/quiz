@@ -34,7 +34,7 @@ const FrontPage = () => {
       .post('http://localhost:8001/login', { username, password })
       .then((response) => {
         console.log(response.data);
-        navigate('/main');
+        navigate('/quiz/select');
         // Dispatch an action to your Redux store for login, if needed
         // dispatch(loginUser(response.data));
       })
