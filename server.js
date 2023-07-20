@@ -2,6 +2,10 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const { Pool } = require('pg'); 
 const cors = require('cors');
+const session = require('express-session');
+const dotenv = require('dotenv');
+
+dotenv.config();
 
 const app = express();
 const port = 8001;
@@ -21,6 +25,19 @@ app.use(bodyParser.json());
 app.get('/', (req, res) => {
   res.send('Quiz App Server is running. Check for security issues in the frontend.');
 });
+
+app.use(
+    session({
+      secret: process.env.SESSION_SECRET,
+      resave: false,
+      saveUninitialized: false,
+      cookie: {
+        maxAge: 172800000, // Set the session expiration time to 2 days (2 * 24 * 60 * 60 * 1000 ms)
+        secure: true, // Enforce HTTPS to use secure cookies
+        sameSite: "none", // Allow cross-site access to the session cookie
+      },
+    })
+  );
 
 app.get('/quiz/questions', async (req, res) => {
     const { category, difficulty } = req.query;
@@ -135,37 +152,44 @@ app.get('/quiz/questions', async (req, res) => {
     });
   });
   
-  app.post('/login', (req, res) => {
-    const { username, password } = req.body;
-  
-    // Check if any of the required fields are missing
-    if (!username || !password) {
-      return res.status(400).json({ error: 'Username and password are required.' });
+app.post('/login', (req, res) => {
+  const { username, password } = req.body;
+
+  // Check if any of the required fields are missing
+  if (!username || !password) {
+    return res.status(400).json({ error: 'Username and password are required.' });
+  }
+
+  // Fetch the user from the database based on the provided username
+  pool.query('SELECT * FROM users WHERE username = $1', [username], (error, result) => {
+    if (error) {
+      console.error('Error executing query:', error);
+      return res.status(500).json({ error: 'Internal server error.' });
     }
-  
-    // Fetch the user from the database based on the provided username
-    pool.query('SELECT * FROM users WHERE username = $1', [username], (error, result) => {
-      if (error) {
-        console.error('Error executing query:', error);
-        return res.status(500).json({ error: 'Internal server error.' });
-      }
-  
-      if (result.rows.length === 0) {
-        return res.status(401).json({ error: 'Invalid username or password.' });
-      }
-  
-      const user = result.rows[0];
-  
-      // Check if the provided password matches the one stored in the database
-      if (user.password !== password) {
-        return res.status(401).json({ error: 'Invalid username or password.' });
-      }
-  
-      // User authenticated, you can generate a JWT token here if needed
-  
-      return res.status(200).json({ message: 'Login successful.', user_id: user.user_id });
-    });
+
+    if (result.rows.length === 0) {
+      return res.status(401).json({ error: 'Invalid username or password.' });
+    }
+
+    const user = result.rows[0];
+
+    // Check if the provided password matches the one stored in the database
+    if (user.password !== password) {
+      return res.status(401).json({ error: 'Invalid username or password.' });
+    }
+
+    // User authenticated, store user data in the session
+    req.session.user = {
+      user_id: user.user_id,
+      username: user.username,
+      // Include any additional user data that you might need in the session
+    };
+
+    req.session.authenticated = true;
+
+    return res.status(200).json({ message: 'Login successful.', user_id: user.user_id });
   });
+});
 
   app.get('/quiz/questions', (req, res) => {
     const { category, difficulty } = req.query;
