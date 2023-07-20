@@ -175,7 +175,6 @@ app.use(passport.session());
 
 passport.use(
     new LocalStrategy((username, password, done) => {
-      // Fetch the user from the database based on the provided username
       pool.query('SELECT * FROM users WHERE username = $1', [username], (error, result) => {
         if (error) {
           console.error('Error executing query:', error);
@@ -188,16 +187,25 @@ passport.use(
   
         const user = result.rows[0];
   
-        // No password hashing, just compare the plain text password
-        if (user.password !== password) {
-          return done(null, false, { message: 'Invalid username or password.' });
-        }
+        // Compare the provided password with the hashed password from the database using bcrypt.compare
+        bcrypt.compare(password, user.password, (err, isMatch) => {
+          if (err) {
+            console.error('Error comparing passwords:', err);
+            return done(err);
+          }
   
-        // Passwords match, user authenticated
-        return done(null, user);
+          if (isMatch) {
+            // Passwords match, user authenticated
+            return done(null, user);
+          } else {
+            // Passwords do not match
+            return done(null, false, { message: 'Invalid username or password.' });
+          }
+        });
       });
     })
   );
+  
   
   // Serialize and deserialize user (required for session support)
   passport.serializeUser((user, done) => {
@@ -226,7 +234,7 @@ passport.use(
     [
       body('username').notEmpty().withMessage('Username is required.'),
       body('password').notEmpty().withMessage('Password is required.'),
-    ],
+    ], passport.authenticate('local'), 
     (req, res) => {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
