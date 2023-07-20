@@ -139,20 +139,28 @@ app.get('/quiz/questions', async (req, res) => {
         return res.status(409).json({ error: 'Username already exists.' });
       }
   
-      // Insert the new user into the database
-      pool.query(
-        'INSERT INTO users (username, email, password) VALUES ($1, $2, $3) RETURNING user_id',
-        [username, email, password],
-        (err, result) => {
-          if (err) {
-            console.error('Error executing query:', err);
-            return res.status(500).json({ error: 'Internal server error.' });
-          }
-  
-          const user_id = result.rows[0].user_id;
-          return res.status(201).json({ message: 'Registration successful.', user_id });
+      // Hash and salt the password before inserting the new user into the database
+      bcrypt.hash(password, 10, (err, hash) => {
+        if (err) {
+          console.error('Error hashing password:', err);
+          return res.status(500).json({ error: 'Internal server error.' });
         }
-      );
+  
+        // Insert the new user into the database with the hashed password
+        pool.query(
+          'INSERT INTO users (username, email, password) VALUES ($1, $2, $3) RETURNING user_id',
+          [username, email, hash], // Use the hash instead of the plain-text password
+          (err, result) => {
+            if (err) {
+              console.error('Error executing query:', err);
+              return res.status(500).json({ error: 'Internal server error.' });
+            }
+  
+            const user_id = result.rows[0].user_id;
+            return res.status(201).json({ message: 'Registration successful.', user_id });
+          }
+        );
+      });
     });
   });
 
@@ -207,11 +215,7 @@ passport.use(
     });
   });
 
-  app.get("/login", (req, res) => {
-    res.render("login");
-  });
-  
-  app.post('/login', passport.authenticate('local'), (req, res) => {
+  app.post('/login', (req, res) => {
     const { username, password } = req.body;
   
     // Check if any of the required fields are missing
@@ -232,21 +236,30 @@ passport.use(
   
       const user = result.rows[0];
   
-      // No password hashing, just compare the plain text password
-      if (user.password !== password) {
-        return res.status(401).json({ error: 'Invalid username or password.' });
-      }
+      // Compare the provided password with the hashed password from the database using bcrypt.compare
+      bcrypt.compare(password, user.password, (err, isMatch) => {
+        if (err) {
+          console.error('Error comparing passwords:', err);
+          return res.status(500).json({ error: 'Internal server error.' });
+        }
   
-      // User authenticated, store user data in the session
-      req.session.user = {
-        user_id: user.user_id,
-        username: user.username,
-        // Include any additional user data that you might need in the session
-      };
+        if (isMatch) {
+          // Passwords match, user authenticated
+          // Store user data in the session
+          req.session.user = {
+            user_id: user.user_id,
+            username: user.username,
+            // Include any additional user data that you might need in the session
+          };
   
-      req.session.authenticated = true;
+          req.session.authenticated = true;
   
-      return res.status(200).json({ message: 'Login successful.', user_id: user.user_id });
+          return res.status(200).json({ message: 'Login successful.', user_id: user.user_id });
+        } else {
+          // Passwords do not match
+          return res.status(401).json({ error: 'Invalid username or password.' });
+        }
+      });
     });
   });
 
