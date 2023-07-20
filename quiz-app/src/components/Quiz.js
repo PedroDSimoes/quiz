@@ -8,6 +8,10 @@ const QuizPage = () => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [userSelectedAnswer, setUserSelectedAnswer] = useState(null);
   const [timer, setTimer] = useState(15);
+  const [hasMovedToNextQuestion, setHasMovedToNextQuestion] = useState(false);
+  const [correctAnswers, setCorrectAnswers] = useState(0);
+  const [incorrectAnswers, setIncorrectAnswers] = useState(0);
+  const [unansweredQuestions, setUnansweredQuestions] = useState(0);
 
   useEffect(() => {
     // Get the category and difficulty from the URL parameters
@@ -23,7 +27,7 @@ const QuizPage = () => {
     let countdownInterval;
 
     // Start the countdown timer when a new question is displayed
-    if (currentQuestionIndex < questions.length) {
+    if (currentQuestionIndex < questions.length && !hasMovedToNextQuestion) {
       setTimer(15);
       countdownInterval = setInterval(() => {
         setTimer((prevTimer) => {
@@ -31,8 +35,7 @@ const QuizPage = () => {
             return prevTimer - 1;
           } else {
             clearInterval(countdownInterval);
-            setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
-            setUserSelectedAnswer(null); // Reset user's answer when moving to the next question
+            handleNextQuestion(false); // Move to the next question with an unanswered flag
             return 15; // Reset timer to 15 when it reaches 0 and move to the next question
           }
         });
@@ -41,7 +44,7 @@ const QuizPage = () => {
 
     // Clean up the interval when the component is unmounted or the question changes
     return () => clearInterval(countdownInterval);
-  }, [currentQuestionIndex, questions]);
+  }, [currentQuestionIndex, questions, hasMovedToNextQuestion]);
 
   const fetchQuestions = async (category, difficulty) => {
     try {
@@ -58,7 +61,36 @@ const QuizPage = () => {
 
   const handleAnswerSelection = (answerId) => {
     setUserSelectedAnswer(answerId);
+    setHasMovedToNextQuestion(true); // Stop the timer and disable the options
   };
+
+  const handleNextQuestion = (isAnswered = true) => {
+    setHasMovedToNextQuestion(false); // Reset the flag to allow the timer for the next question
+
+    // Update the correct, incorrect, and unanswered questions count based on user's answer
+    if (isAnswered) {
+      const currentQuestion = questions[currentQuestionIndex];
+      const isAnswerCorrect =
+        userSelectedAnswer !== null &&
+        currentQuestion.answers.find((answer) => answer.is_correct)?.answer_id === userSelectedAnswer;
+
+      if (isAnswerCorrect) {
+        setCorrectAnswers((prevCorrect) => prevCorrect + 1);
+      } else {
+        setIncorrectAnswers((prevIncorrect) => prevIncorrect + 1);
+      }
+    } else {
+      setUnansweredQuestions((prevUnanswered) => prevUnanswered + 1);
+    }
+
+    setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
+    setUserSelectedAnswer(null); // Reset user's answer when moving to the next question
+  };
+
+  // Calculate the user's score percentage
+  const totalQuestions = questions.length;
+  const answeredQuestions = correctAnswers + incorrectAnswers;
+  const scorePercentage = (correctAnswers / answeredQuestions) * 100 || 0;
 
   // Render the current question and the timer
   const currentQuestion = questions[currentQuestionIndex];
@@ -82,7 +114,7 @@ const QuizPage = () => {
                       name="answer"
                       value={answer.answer_id}
                       onChange={() => handleAnswerSelection(answer.answer_id)}
-                      disabled={userSelectedAnswer !== null}
+                      disabled={userSelectedAnswer !== null || hasMovedToNextQuestion}
                     />
                     {answer.answer_text}
                   </label>
@@ -96,8 +128,23 @@ const QuizPage = () => {
               </div>
             )}
           </div>
-          <p>Time remaining: {timer} seconds</p>
+          {userSelectedAnswer !== null || hasMovedToNextQuestion ? (
+            <button onClick={() => handleNextQuestion(userSelectedAnswer !== null)}>Next Question</button>
+          ) : (
+            <p>Time remaining: {timer} seconds</p>
+          )}
         </>
+      )}
+
+      {/* Display the score at the end of the quiz */}
+      {!currentQuestion && (
+        <div>
+          <p>Congratulations! You've completed the quiz.</p>
+          <p>Your Score: {scorePercentage.toFixed(2)}%</p>
+          <p>Correct Answers: {correctAnswers}</p>
+          <p>Incorrect Answers: {incorrectAnswers}</p>
+          <p>Unanswered Questions: {unansweredQuestions}</p>
+        </div>
       )}
     </div>
   );
