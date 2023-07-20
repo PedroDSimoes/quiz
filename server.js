@@ -4,6 +4,9 @@ const { Pool } = require('pg');
 const cors = require('cors');
 const session = require('express-session');
 const dotenv = require('dotenv');
+const passport = require("passport");
+const LocalStrategy = require("passport-local").Strategy;
+const bcrypt = require('bcrypt');
 
 dotenv.config();
 
@@ -35,6 +38,7 @@ app.use(
         maxAge: 172800000, // Set the session expiration time to 2 days (2 * 24 * 60 * 60 * 1000 ms)
         secure: true, // Enforce HTTPS to use secure cookies
         sameSite: "none", // Allow cross-site access to the session cookie
+        httpOnly: true, // Prevent client-side access to the cookie
       },
     })
   );
@@ -151,45 +155,116 @@ app.get('/quiz/questions', async (req, res) => {
       );
     });
   });
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+passport.use(
+    new LocalStrategy((username, password, done) => {
+      // Fetch the user from the database based on the provided username
+      pool.query('SELECT * FROM users WHERE username = $1', [username], (error, result) => {
+        if (error) {
+          console.error('Error executing query:', error);
+          return done(error);
+        }
   
-app.post('/login', (req, res) => {
-  const { username, password } = req.body;
-
-  // Check if any of the required fields are missing
-  if (!username || !password) {
-    return res.status(400).json({ error: 'Username and password are required.' });
-  }
-
-  // Fetch the user from the database based on the provided username
-  pool.query('SELECT * FROM users WHERE username = $1', [username], (error, result) => {
-    if (error) {
-      console.error('Error executing query:', error);
-      return res.status(500).json({ error: 'Internal server error.' });
-    }
-
-    if (result.rows.length === 0) {
-      return res.status(401).json({ error: 'Invalid username or password.' });
-    }
-
-    const user = result.rows[0];
-
-    // Check if the provided password matches the one stored in the database
-    if (user.password !== password) {
-      return res.status(401).json({ error: 'Invalid username or password.' });
-    }
-
-    // User authenticated, store user data in the session
-    req.session.user = {
-      user_id: user.user_id,
-      username: user.username,
-      // Include any additional user data that you might need in the session
-    };
-
-    req.session.authenticated = true;
-
-    return res.status(200).json({ message: 'Login successful.', user_id: user.user_id });
+        if (result.rows.length === 0) {
+          return done(null, false, { message: 'Invalid username or password.' });
+        }
+  
+        const user = result.rows[0];
+  
+        // No password hashing, just compare the plain text password
+        if (user.password !== password) {
+          return done(null, false, { message: 'Invalid username or password.' });
+        }
+  
+        // Passwords match, user authenticated
+        return done(null, user);
+      });
+    })
+  );
+  
+  // Serialize and deserialize user (required for session support)
+  passport.serializeUser((user, done) => {
+    done(null, user.user_id); // Use user_id as the unique identifier for serialization
   });
-});
+  
+  passport.deserializeUser((id, done) => {
+    // Fetch the user from the database based on the user_id (stored in the session)
+    pool.query('SELECT * FROM users WHERE user_id = $1', [id], (error, result) => {
+      if (error) {
+        console.error('Error executing query:', error);
+        return done(error);
+      }
+  
+      if (result.rows.length === 0) {
+        return done(null, false, { message: 'User not found.' });
+      }
+  
+      const user = result.rows[0];
+      done(null, user);
+    });
+  });
+
+  app.get("/login", (req, res) => {
+    res.render("login");
+  });
+  
+  app.post('/login', passport.authenticate('local'), (req, res) => {
+    const { username, password } = req.body;
+  
+    // Check if any of the required fields are missing
+    if (!username || !password) {
+      return res.status(400).json({ error: 'Username and password are required.' });
+    }
+  
+    // Fetch the user from the database based on the provided username
+    pool.query('SELECT * FROM users WHERE username = $1', [username], (error, result) => {
+      if (error) {
+        console.error('Error executing query:', error);
+        return res.status(500).json({ error: 'Internal server error.' });
+      }
+  
+      if (result.rows.length === 0) {
+        return res.status(401).json({ error: 'Invalid username or password.' });
+      }
+  
+      const user = result.rows[0];
+  
+      // No password hashing, just compare the plain text password
+      if (user.password !== password) {
+        return res.status(401).json({ error: 'Invalid username or password.' });
+      }
+  
+      // User authenticated, store user data in the session
+      req.session.user = {
+        user_id: user.user_id,
+        username: user.username,
+        // Include any additional user data that you might need in the session
+      };
+  
+      req.session.authenticated = true;
+  
+      return res.status(200).json({ message: 'Login successful.', user_id: user.user_id });
+    });
+  });
+
+  app.get('/logout', (req, res) => {
+    // Perform any other operations related to logout if needed
+  
+    // Logout the user using req.logout with a callback function
+    req.logout((err) => {
+      if (err) {
+        console.error('Error during logout:', err);
+        return res.status(500).json({ error: 'Internal server error.' });
+      }
+  
+      // Logout successful, redirect the user to the homepage
+      res.redirect("/");
+    });
+  });
+  
 
   app.get('/quiz/questions', (req, res) => {
     const { category, difficulty } = req.query;
