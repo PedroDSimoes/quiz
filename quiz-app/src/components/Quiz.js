@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const QuizPage = () => {
@@ -12,15 +12,25 @@ const QuizPage = () => {
   const [correctAnswers, setCorrectAnswers] = useState(0);
   const [incorrectAnswers, setIncorrectAnswers] = useState(0);
   const [unansweredQuestions, setUnansweredQuestions] = useState(0);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    // Get the category and difficulty from the URL parameters
-    const searchParams = new URLSearchParams(location.search);
-    const category = searchParams.get('category');
-    const difficulty = searchParams.get('difficulty');
+    // Check if there is a user_id in localStorage
+    const user_id = localStorage.getItem('user_id');
+    if (!user_id) {
+      // If no user_id is found, navigate back to the login page or display an error message
+      // You can modify this to redirect the user to your desired route for login
+      // For example: navigate('/login');
+      alert('You need to log in to access this quiz.');
+      window.location.replace('http://localhost:3000'); 
+    } else {
+      // If there is a user_id, proceed with fetching questions
+      const searchParams = new URLSearchParams(location.search);
+      const category = searchParams.get('category');
+      const difficulty = searchParams.get('difficulty');
 
-    // Fetch the questions based on the category and difficulty
-    fetchQuestions(category, difficulty);
+      fetchQuestions(category, difficulty);
+    }
   }, [location]);
 
   useEffect(() => {

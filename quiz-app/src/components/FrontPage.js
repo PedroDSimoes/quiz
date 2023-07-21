@@ -41,7 +41,13 @@ const FrontPage = () => {
       .post('http://localhost:8001/login', { username, password })
       .then((response) => {
         console.log(response.data);
+
+        // Save the user ID to localStorage upon successful login
+        localStorage.setItem('user_id', response.data.user_id);
+
+        // Navigate to the next page (replace '/quiz/select' with your desired destination)
         navigate('/quiz/select');
+
         // Dispatch an action to your Redux store for login, if needed
         // dispatch(loginUser(response.data));
       })

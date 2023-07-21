@@ -139,10 +139,10 @@ passport.use(
     [
       body('username').notEmpty().withMessage('Username is required.'),
       body('password').notEmpty().withMessage('Password is required.'),
-    ], passport.authenticate('local'),
-    ensureAuthenticated, 
+    ],
+    passport.authenticate('local'),
+    ensureAuthenticated,
     (req, res) => {
-      console.log(req.isAuthenticated())
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() });
@@ -181,7 +181,10 @@ passport.use(
   
             req.session.authenticated = true;
   
-            return res.status(200).json({ message: 'Login successful.', user_id: user.user_id });
+            // Save user_id to localStorage
+            const user_id = user.user_id;
+            res.locals.user_id = user_id; // Store the user_id in res.locals for use in the frontend
+            res.status(200).json({ message: 'Login successful.', user_id: user_id });
           } else {
             // Passwords do not match
             return res.status(401).json({ error: 'Invalid username or password.' });
