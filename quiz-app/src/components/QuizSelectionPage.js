@@ -21,18 +21,28 @@ const QuizSelectionPage = () => {
       });
   };
 
-  const handleDifficultySelection = (category, difficulty) => {
-    // Navigate to the QuizPage with selected category and difficulty as URL parameters
-    window.location.href = `/quiz?category=${encodeURIComponent(category)}&difficulty=${encodeURIComponent(difficulty)}`;
-  };
-
   return (
     <div>
       <h1>Select a Category</h1>
+      {/* History */}
       <Link to="/quiz?category=History&difficulty=easy">History - Easy</Link>
       <Link to="/quiz?category=History&difficulty=medium">History - Medium</Link>
+      <Link to="/quiz?category=History&difficulty=hard">History - Hard</Link>
+
+      {/* General Knowledge */}
+      <Link to="/quiz?category=General Knowledge&difficulty=easy">General Knowledge - Easy</Link>
+      <Link to="/quiz?category=General Knowledge&difficulty=medium">General Knowledge - Medium</Link>
+      <Link to="/quiz?category=General Knowledge&difficulty=hard">General Knowledge - Hard</Link>
+
+      {/* Geography */}
       <Link to="/quiz?category=Geography&difficulty=easy">Geography - Easy</Link>
       <Link to="/quiz?category=Geography&difficulty=medium">Geography - Medium</Link>
+      <Link to="/quiz?category=Geography&difficulty=hard">Geography - Hard</Link>
+
+      {/* Music */}
+      <Link to="/quiz?category=Music&difficulty=easy">Music - Easy</Link>
+      <Link to="/quiz?category=Music&difficulty=medium">Music - Medium</Link>
+      <Link to="/quiz?category=Music&difficulty=hard">Music - Hard</Link>
 
       {loggedIn ? (
         <button onClick={handleLogout}>Logout</button>
