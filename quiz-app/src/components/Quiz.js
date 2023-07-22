@@ -38,7 +38,7 @@ const QuizPage = () => {
 
     // Start the countdown timer when a new question is displayed
     if (currentQuestionIndex < questions.length && !hasMovedToNextQuestion) {
-      setTimer(15);
+      setTimer(30);
       countdownInterval = setInterval(() => {
         setTimer((prevTimer) => {
           if (prevTimer > 0) {
@@ -98,14 +98,14 @@ const QuizPage = () => {
 
   const handleNextQuestion = (isAnswered = true) => {
     setHasMovedToNextQuestion(false); // Reset the flag to allow the timer for the next question
-
+  
     // Update the correct, incorrect, and unanswered questions count based on user's answer
     if (isAnswered) {
       const currentQuestion = questions[currentQuestionIndex];
       const isAnswerCorrect =
         userSelectedAnswer !== null &&
         currentQuestion.answers.find((answer) => answer.is_correct)?.answer_id === userSelectedAnswer;
-
+  
       if (isAnswerCorrect) {
         setCorrectAnswers((prevCorrect) => prevCorrect + 1);
       } else {
@@ -114,8 +114,14 @@ const QuizPage = () => {
     } else {
       setUnansweredQuestions((prevUnanswered) => prevUnanswered + 1);
     }
-
-    setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
+  
+    if (currentQuestionIndex === 9) {
+      // If it's the 10th question, end the quiz here
+      setCurrentQuestionIndex(10); // Set the current index to a value greater than the number of questions
+    } else {
+      setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
+    }
+  
     setUserSelectedAnswer(null); // Reset user's answer when moving to the next question
   };
 
