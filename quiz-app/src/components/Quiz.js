@@ -62,11 +62,33 @@ const QuizPage = () => {
         `http://localhost:8001/quiz/questions?category=${category}&difficulty=${difficulty}`
       );
       const questionsData = response.data.questions;
-      setQuestions(questionsData);
+  
+      // Shuffle the questions array using Fisher-Yates shuffle algorithm
+      const shuffledQuestions = shuffleArray(questionsData);
+  
+      // Shuffle the answers for each question
+      const shuffledQuestionsWithShuffledAnswers = shuffledQuestions.map((question) => ({
+        ...question,
+        answers: shuffleArray(question.answers),
+      }));
+  
+      // Slice the array to get only the first 10 questions
+      const limitedQuestions = shuffledQuestionsWithShuffledAnswers.slice(0, 10);
+  
+      setQuestions(limitedQuestions);
     } catch (error) {
       console.error('Error fetching questions:', error);
       // Handle error
     }
+  };
+  // Function to perform the Fisher-Yates shuffle on an array
+  const shuffleArray = (array) => {
+    const shuffledArray = [...array];
+    for (let i = shuffledArray.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]];
+    }
+    return shuffledArray;
   };
 
   const handleAnswerSelection = (answerId) => {

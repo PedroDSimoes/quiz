@@ -8,6 +8,7 @@ const FrontPage = () => {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [registrationError, setRegistrationError] = useState('');
   const [registrationSuccess, setRegistrationSuccess] = useState(false);
   const [loginError, setLoginError] = useState('');
@@ -16,6 +17,11 @@ const FrontPage = () => {
   const navigate = useNavigate();
 
   const handleRegister = () => {
+    if (password !== confirmPassword) {
+      setRegistrationError('Passwords do not match.');
+      return;
+    }
+
     axios
       .post('http://localhost:8001/register', { username, email, password })
       .then((response) => {
@@ -85,6 +91,13 @@ const FrontPage = () => {
           placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+        />
+         {/* Add "Confirm Password" input */}
+         <input
+          type="password"
+          placeholder="Confirm Password"
+          value={confirmPassword}
+          onChange={(e) => setConfirmPassword(e.target.value)}
         />
         <button onClick={handleRegister}>Register</button>
       </div>
