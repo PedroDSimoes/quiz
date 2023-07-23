@@ -299,6 +299,27 @@ app.get('/quiz/questions', async (req, res) => {
     });
   });
 
+  app.post('/quiz/submit', async (req, res) => {
+    const { user_id, category_name, difficulty_level, score } = req.body;
+  
+    try {
+      // Insert the quiz result into the quiz_results table
+      const query = `
+        INSERT INTO quiz_results (user_id, category_name, difficulty_level, score)
+        VALUES ($1, $2, $3, $4)
+      `;
+      const values = [user_id, category_name, difficulty_level, score];
+      await pool.query(query, values);
+  
+      return res.status(201).json({ message: 'Quiz result submitted successfully.' });
+    } catch (error) {
+      console.error('Error inserting quiz result:', error);
+      return res.status(500).json({ error: 'Internal server error.' });
+    }
+  });
+
+  
+
   app.get('/logout', (req, res) => {
     // Perform any other operations related to logout if needed
   

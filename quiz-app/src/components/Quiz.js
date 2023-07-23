@@ -137,6 +137,36 @@ const QuizPage = () => {
     userSelectedAnswer !== null &&
     currentQuestion.answers.find((answer) => answer.is_correct)?.answer_id === userSelectedAnswer;
 
+    
+    const submitQuizResult = async () => {
+      const user_id = JSON.parse(localStorage.getItem('user_id')); // Parse the user_id from localStorage
+      const score = (correctAnswers / totalQuestions) * 100; // Calculate the score percentage
+    
+      // Get the category name and difficulty from the URL query parameters
+      const searchParams = new URLSearchParams(location.search);
+      const category_name = searchParams.get('category');
+      const difficulty_level = searchParams.get('difficulty');
+    
+      try {
+        await axios.post('http://localhost:8001/quiz/submit', {
+          user_id,
+          category_name,
+          difficulty_level,
+          score,
+        });
+    
+        // Handle success, e.g., display a success message or navigate to a new page
+        alert('Quiz result submitted successfully.');
+      } catch (error) {
+        console.error('Error submitting quiz result:', error);
+        // Handle error, e.g., display an error message
+        alert('Error submitting quiz result. Please try again later.');
+      }
+    };
+    
+    
+
+
   return (
     <div>
       {currentQuestion && (
@@ -182,6 +212,7 @@ const QuizPage = () => {
           <p>Correct Answers: {correctAnswers}</p>
           <p>Incorrect Answers: {incorrectAnswers}</p>
           <p>Unanswered Questions: {unansweredQuestions}</p>
+          <button onClick={submitQuizResult}>Submit Quiz</button>
         </div>
       )}
     </div>
