@@ -2,6 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
+const capitalizeFirstLetter = (string) => {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+};
+
 const QuizSelectionPage = () => {
   const [loggedIn, setLoggedIn] = useState(true); // Set this state based on the user's login status
   const navigate = useNavigate();
@@ -73,12 +77,15 @@ const QuizSelectionPage = () => {
         }
       });
   
-      const averageScores = {};
+      const averageScoresObj = {};
       Object.keys(scoreSumByCategoryAndDifficulty).forEach((key) => {
         const quizCount = quizCountsByCategoryAndDifficulty[key];
         const averageScore = scoreSumByCategoryAndDifficulty[key] / quizCount;
-        averageScores[key] = averageScore;
+        averageScoresObj[key] = averageScore;
       });
+  
+      // Update the state with the calculated average scores
+      setAverageScores(averageScoresObj);
   
       // Now you have the average scores per category and difficulty level
       console.log("Average Scores:", averageScores);
@@ -88,8 +95,6 @@ const QuizSelectionPage = () => {
       alert('Error fetching quiz results. Please try again later.');
     }
   };
-  
-  
   
 
   return (
@@ -114,17 +119,20 @@ const QuizSelectionPage = () => {
       <Link to="/quiz?category=Music&difficulty=easy">Music - Easy</Link>
       <Link to="/quiz?category=Music&difficulty=medium">Music - Medium</Link>
       <Link to="/quiz?category=Music&difficulty=hard">Music - Hard</Link>
-      <h2>Average Scores</h2>
-      {Object.entries(averageScores).map(([categoryDifficulty, score]) => (
+      <div>
+    {/* ... */}
+    <h2>Average Scores</h2>
+    {Object.entries(averageScores).map(([categoryDifficulty, score]) => {
+      const [category, difficulty] = categoryDifficulty.split('_');
+      const formattedScore = score.toFixed(2);
+      return (
         <p key={categoryDifficulty}>
-          Your current score in {categoryDifficulty} is {score.toFixed(2)}%
+          Your current score in {category}, {capitalizeFirstLetter(difficulty)} difficulty is {formattedScore}%
         </p>
-      ))}
-      {loggedIn ? (
-        <button onClick={handleLogout}>Logout</button>
-      ) : (
-        <Link to="/login">Login</Link>
-      )}
+      );
+    })}
+    {/* ... */}
+  </div>
     </div>
   );
 };
