@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const QuizSelectionPage = () => {
   const [loggedIn, setLoggedIn] = useState(true); // Set this state based on the user's login status
   const navigate = useNavigate();
+  const [averageScores, setAverageScores] = useState({}); 
 
   const handleLogout = () => {
     // Make a request to the logout endpoint on the server (using the full URL)
@@ -35,6 +36,62 @@ const QuizSelectionPage = () => {
     window.location.replace('http://localhost:3000'); ;
   }
 
+  useEffect(() => {
+    fetchQuizResults();
+  }, []);
+
+  const fetchQuizResults = async () => {
+    const user_id = JSON.parse(localStorage.getItem('user_id')); // Parse the user_id from localStorage
+  
+    try {
+      const response = await axios.get(`http://localhost:8001/quiz/results/${user_id}`);
+      const quizResults = response.data.results;
+  
+      if (quizResults.length === 0) {
+        console.log("No quiz results available for the user.");
+        // Handle the case when there are no quiz results available for the user
+        return;
+      }
+  
+      // Calculate average score per category and difficulty level
+      const scoreSumByCategoryAndDifficulty = {};
+      const quizCountsByCategoryAndDifficulty = {};
+  
+      quizResults.forEach((result) => {
+        const { category_name, difficulty_level, score } = result;
+        const key = `${category_name}_${difficulty_level}`;
+  
+        if (!isNaN(parseFloat(score))) {
+          const scoreAsNumber = parseFloat(score);
+          if (scoreSumByCategoryAndDifficulty[key] === undefined) {
+            scoreSumByCategoryAndDifficulty[key] = scoreAsNumber;
+            quizCountsByCategoryAndDifficulty[key] = 1;
+          } else {
+            scoreSumByCategoryAndDifficulty[key] += scoreAsNumber;
+            quizCountsByCategoryAndDifficulty[key] += 1;
+          }
+        }
+      });
+  
+      const averageScores = {};
+      Object.keys(scoreSumByCategoryAndDifficulty).forEach((key) => {
+        const quizCount = quizCountsByCategoryAndDifficulty[key];
+        const averageScore = scoreSumByCategoryAndDifficulty[key] / quizCount;
+        averageScores[key] = averageScore;
+      });
+  
+      // Now you have the average scores per category and difficulty level
+      console.log("Average Scores:", averageScores);
+    } catch (error) {
+      console.error('Error fetching quiz results:', error);
+      // Handle error, e.g., display an error message
+      alert('Error fetching quiz results. Please try again later.');
+    }
+  };
+  
+  
+  
+
   return (
     <div>
       <h1>Select a Category</h1>
@@ -57,7 +114,12 @@ const QuizSelectionPage = () => {
       <Link to="/quiz?category=Music&difficulty=easy">Music - Easy</Link>
       <Link to="/quiz?category=Music&difficulty=medium">Music - Medium</Link>
       <Link to="/quiz?category=Music&difficulty=hard">Music - Hard</Link>
-
+      <h2>Average Scores</h2>
+      {Object.entries(averageScores).map(([categoryDifficulty, score]) => (
+        <p key={categoryDifficulty}>
+          Your current score in {categoryDifficulty} is {score.toFixed(2)}%
+        </p>
+      ))}
       {loggedIn ? (
         <button onClick={handleLogout}>Logout</button>
       ) : (

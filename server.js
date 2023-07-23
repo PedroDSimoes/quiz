@@ -318,7 +318,26 @@ app.get('/quiz/questions', async (req, res) => {
     }
   });
 
+  app.get('/quiz/results/:user_id', async (req, res) => {
+    const { user_id } = req.params;
   
+    try {
+      // Fetch quiz results for the specified user_id from the database
+      const query = `
+        SELECT category_name, difficulty_level, score
+        FROM quiz_results
+        WHERE user_id = $1;
+      `;
+      const values = [user_id];
+      const result = await pool.query(query, values);
+  
+      // Return the quiz results as JSON
+      return res.json({ results: result.rows });
+    } catch (error) {
+      console.error('Error fetching quiz results:', error);
+      return res.status(500).json({ error: 'Internal server error.' });
+    }
+  });
 
   app.get('/logout', (req, res) => {
     // Perform any other operations related to logout if needed
