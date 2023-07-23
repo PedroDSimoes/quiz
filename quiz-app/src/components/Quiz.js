@@ -46,7 +46,7 @@ const QuizPage = () => {
           } else {
             clearInterval(countdownInterval);
             handleNextQuestion(false); // Move to the next question with an unanswered flag
-            return 15; // Reset timer to 15 when it reaches 0 and move to the next question
+            return 30; // Reset timer to 15 when it reaches 0 and move to the next question
           }
         });
       }, 1000);

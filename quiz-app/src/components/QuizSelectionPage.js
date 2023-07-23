@@ -43,10 +43,10 @@ const QuizSelectionPage = () => {
       <Link to="/quiz?category=History&difficulty=medium">History - Medium</Link>
       <Link to="/quiz?category=History&difficulty=hard">History - Hard</Link>
 
-      {/* General Knowledge */}
-      <Link to="/quiz?category=General Knowledge&difficulty=easy">General Knowledge - Easy</Link>
-      <Link to="/quiz?category=General Knowledge&difficulty=medium">General Knowledge - Medium</Link>
-      <Link to="/quiz?category=General Knowledge&difficulty=hard">General Knowledge - Hard</Link>
+      {/* Science */}
+      <Link to="/quiz?category=Science&difficulty=easy">Science - Easy</Link>
+      <Link to="/quiz?category=Science&difficulty=medium">Science - Medium</Link>
+      <Link to="/quiz?category=Science&difficulty=hard">Science - Hard</Link>
 
       {/* Geography */}
       <Link to="/quiz?category=Geography&difficulty=easy">Geography - Easy</Link>
