@@ -207,8 +207,8 @@ const QuizPage = () => {
                   ) : (
                     <p className="quiz-feedback incorrect">Incorrect!</p>
                   )}
-                <p>Correct answer: {currentQuestion.answers.find((answer) => answer.is_correct).answer_text}</p>
-                <p>{currentQuestion.explanation}</p>
+                <p className="explanation-text">Correct answer: {currentQuestion.answers.find((answer) => answer.is_correct).answer_text}</p>
+                <p style={{ fontSize: '14px' }}>{currentQuestion.explanation}</p>
               </div>
             )}
           </div>

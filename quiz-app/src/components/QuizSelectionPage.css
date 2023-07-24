@@ -68,7 +68,7 @@
     max-width: 800px;
     margin: 20px auto;
     padding: 20px;
-    background-color: #f9f9f9;
+    background-color: #c9bbe1;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   }
@@ -86,13 +86,13 @@
     margin: 10px 0;
     color: black;
     text-align: center;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-family:cursive;
   }
   
   /* Logout button styles */
   .logout-button {
     display: block;
-    margin: 5rem auto;
+    margin: 2rem auto;
     padding: 1rem 2rem;
     background-color: #7d8690;
     color: white;
@@ -110,4 +110,10 @@
     transform: scale(1.05);
     /* Adding a shadow effect on hover */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  }
+
+  .greeting {
+    text-align: center;
+    font-size: 3rem;
+    margin-top: 0.5rem;
   }

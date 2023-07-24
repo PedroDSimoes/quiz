@@ -11,6 +11,8 @@ const QuizSelectionPage = () => {
   const [loggedIn, setLoggedIn] = useState(true); // Set this state based on the user's login status
   const navigate = useNavigate();
   const [averageScores, setAverageScores] = useState({}); 
+  const [username, setUsername] = useState('');
+
 
   const handleLogout = () => {
     // Make a request to the logout endpoint on the server (using the full URL)
@@ -40,8 +42,8 @@ const QuizSelectionPage = () => {
     alert('You need to log in to access the quiz selection page.');
     window.location.replace('http://localhost:3000'); ;
   }
-
   useEffect(() => {
+    fetchUsername();
     fetchQuizResults();
   }, []);
 
@@ -97,9 +99,27 @@ const QuizSelectionPage = () => {
     }
   };
   
+  const fetchUsername = async () => {
+    const user_id = localStorage.getItem('user_id');
+
+    try {
+      const response = await axios.get(`http://localhost:8001/user/${user_id}`);
+      const { username } = response.data; // Assuming the server returns the username in the response
+      setUsername(username);
+    } catch (error) {
+      console.error('Error fetching username:', error);
+      // Handle error, e.g., display an error message
+      alert('Error fetching username. Please try again later.');
+    }
+  };
+
 
   return (
     <div>
+      <div>
+        <h1 className="greeting">Hello, {username}!</h1>
+      </div>
+      <button onClick={handleLogout} className="logout-button">Logout</button>
 <div className="category-section">
 
   <div className="category-card category-science">
@@ -166,7 +186,6 @@ const QuizSelectionPage = () => {
     })}
     {/* ... */}
   </div>
-  <button onClick={handleLogout} className="logout-button">Logout</button>
     </div>
   );
 };

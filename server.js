@@ -361,7 +361,33 @@ passport.use(
       return res.status(500).json({ error: 'Internal server error.' });
     }
   });
-
+  app.get('/user/:user_id', async (req, res) => {
+    const { user_id } = req.params;
+  
+    try {
+      // Fetch the user's username from the database using the correct column name
+      const query = `
+        SELECT username
+        FROM users
+        WHERE user_id = $1; -- Use the correct column name here
+      `;
+      const values = [user_id];
+      const result = await pool.query(query, values);
+  
+      // Check if a user with the specified user_id exists
+      if (result.rows.length === 0) {
+        return res.status(404).json({ error: 'User not found.' });
+      }
+  
+      const username = result.rows[0].username;
+  
+      // Return the username as JSON
+      return res.json({ username });
+    } catch (error) {
+      console.error('Error fetching username:', error);
+      return res.status(500).json({ error: 'Internal server error.' });
+    }
+  });
   app.get('/logout', (req, res) => {
     // Perform any other operations related to logout if needed
   
