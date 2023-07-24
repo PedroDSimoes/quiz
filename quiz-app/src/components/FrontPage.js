@@ -3,31 +3,41 @@ import { useDispatch } from 'react-redux';
 import { loginUser } from '../actions';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import './FrontPage.css';
 
 const FrontPage = () => {
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  // Login state variables
+  const [loginUsername, setLoginUsername] = useState('');
+  const [loginPassword, setLoginPassword] = useState('');
+  const [loginError, setLoginError] = useState('');
+
+  // Registration state variables
+  const [registrationUsername, setRegistrationUsername] = useState('');
+  const [registrationEmail, setRegistrationEmail] = useState('');
+  const [registrationPassword, setRegistrationPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [registrationError, setRegistrationError] = useState('');
   const [registrationSuccess, setRegistrationSuccess] = useState(false);
-  const [loginError, setLoginError] = useState('');
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleRegister = () => {
-    if (password !== confirmPassword) {
+    if (registrationPassword !== confirmPassword) {
       setRegistrationError('Passwords do not match.');
       return;
     }
 
     axios
-      .post('http://localhost:8001/register', { username, email, password })
+      .post('http://localhost:8001/register', {
+        username: registrationUsername,
+        email: registrationEmail,
+        password: registrationPassword,
+      })
       .then((response) => {
         console.log(response.data);
-        setRegistrationSuccess(true); // Set the registration success message state
-        setRegistrationError(''); // Clear any previous registration errors
+        setRegistrationSuccess(true);
+        setRegistrationError('');
         // Dispatch an action to your Redux store for login, if needed
         // dispatch(loginUser(response.data));
       })
@@ -38,22 +48,20 @@ const FrontPage = () => {
         } else {
           setRegistrationError('Registration failed. Please try again later.');
         }
-        setRegistrationSuccess(false); // Registration failed, reset the registration success message
+        setRegistrationSuccess(false);
       });
   };
 
   const handleLogin = () => {
     axios
-      .post('http://localhost:8001/login', { username, password })
+      .post('http://localhost:8001/login', {
+        username: loginUsername,
+        password: loginPassword,
+      })
       .then((response) => {
         console.log(response.data);
-
-        // Save the user ID to localStorage upon successful login
         localStorage.setItem('user_id', response.data.user_id);
-
-        // Navigate to the next page (replace '/quiz/select' with your desired destination)
         navigate('/quiz/select');
-
         // Dispatch an action to your Redux store for login, if needed
         // dispatch(loginUser(response.data));
       })
@@ -69,31 +77,55 @@ const FrontPage = () => {
 
   return (
     <div>
-      <h1>Welcome to the Quiz App!</h1>
-      <div>
+      {/* Navbar */}
+      <nav className="navbar">
+        <div className="login-section">
+          {loginError && <p style={{ color: 'red' }}>{loginError}</p>}
+          <input
+            type="text"
+            placeholder="Username"
+            value={loginUsername}
+            onChange={(e) => setLoginUsername(e.target.value)}
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            value={loginPassword}
+            onChange={(e) => setLoginPassword(e.target.value)}
+          />
+          <button onClick={handleLogin}>Login</button>
+        </div>
+        <a href="#about">About</a>
+      </nav>
+      {/* Header/Nav section */}
+      <header className="app-header">
+        <h1 className="app-title">InfoSphere</h1>
+      </header>
+
+      {/* Registration section */}
+      <div className="registration-section">
         <h2>Register</h2>
-        {registrationSuccess && <p style={{ color: 'green' }}>Registration successful!</p>}
+        {registrationSuccess && <p style={{ color: 'green' }}>Registration successful! Please log in above.</p>}
         {registrationError && <p style={{ color: 'red' }}>{registrationError}</p>}
         <input
           type="text"
           placeholder="Username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
+          value={registrationUsername}
+          onChange={(e) => setRegistrationUsername(e.target.value)}
         />
         <input
           type="email"
           placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          value={registrationEmail}
+          onChange={(e) => setRegistrationEmail(e.target.value)}
         />
         <input
           type="password"
           placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          value={registrationPassword}
+          onChange={(e) => setRegistrationPassword(e.target.value)}
         />
-         {/* Add "Confirm Password" input */}
-         <input
+        <input
           type="password"
           placeholder="Confirm Password"
           value={confirmPassword}
@@ -102,22 +134,13 @@ const FrontPage = () => {
         <button onClick={handleRegister}>Register</button>
       </div>
 
-      <div>
-        <h2>Login</h2>
-        {loginError && <p style={{ color: 'red' }}>{loginError}</p>}
-        <input
-          type="text"
-          placeholder="Username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <button onClick={handleLogin}>Login</button>
+      {/* Mission/About section */}
+      <div className="mission-section" id="about">
+        <h2 className="section-title">Our Mission</h2>
+        <p className="mission-text">
+          Something something something
+        </p>
+        {/* ... Add more paragraphs of the mission or about section ... */}
       </div>
     </div>
   );

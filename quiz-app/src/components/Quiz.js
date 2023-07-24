@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+ // Import the quiz.css file from the same folder
+
 
 const QuizPage = () => {
   const location = useLocation();
@@ -162,7 +164,6 @@ const QuizPage = () => {
         });
     
         // Handle success, e.g., display a success message or navigate to a new page
-        alert('Quiz result submitted successfully.');
       } catch (error) {
         console.error('Error submitting quiz result:', error);
         // Handle error, e.g., display an error message
@@ -170,7 +171,11 @@ const QuizPage = () => {
       }
     };
     
-    
+    const handlePracticeAgainClick = () => {
+      // Redirect to the desired URL
+      window.location.href = 'http://localhost:3000/quiz/select';
+      // You can also use react-router-dom if you're using React Router for navigation.
+    };
 
 
     return (
@@ -199,7 +204,7 @@ const QuizPage = () => {
                 <div>
                   {isAnswerCorrect ? <p>Correct!</p> : <p>Incorrect!</p>}
                   <p>Correct answer: {currentQuestion.answers.find((answer) => answer.is_correct).answer_text}</p>
-                  <p>Explanation: {currentQuestion.explanation}</p>
+                  <p>{currentQuestion.explanation}</p>
                 </div>
               )}
             </div>
@@ -219,6 +224,7 @@ const QuizPage = () => {
             <p>Correct Answers: {correctAnswers}</p>
             <p>Incorrect Answers: {incorrectAnswers}</p>
             <p>Unanswered Questions: {unansweredQuestions}</p>
+            <button onClick={handlePracticeAgainClick}>Practice again</button>
           </div>
         )}
       </div>
