@@ -137,6 +137,12 @@ const QuizPage = () => {
     userSelectedAnswer !== null &&
     currentQuestion.answers.find((answer) => answer.is_correct)?.answer_id === userSelectedAnswer;
 
+    useEffect(() => {
+      // When all questions have been answered, automatically submit the quiz result
+      if (currentQuestionIndex === questions.length && currentQuestionIndex !== 0) {
+        submitQuizResult();
+      }
+    }, [currentQuestionIndex, questions])
     
     const submitQuizResult = async () => {
       const user_id = JSON.parse(localStorage.getItem('user_id')); // Parse the user_id from localStorage
@@ -167,56 +173,56 @@ const QuizPage = () => {
     
 
 
-  return (
-    <div>
-      {currentQuestion && (
-        <>
-          <div>
-            <p>{currentQuestion.question_text}</p>
-            <ul>
-              {currentQuestion.answers.map((answer) => (
-                <li key={answer.answer_id}>
-                  <label>
-                    <input
-                      type="radio"
-                      name="answer"
-                      value={answer.answer_id}
-                      onChange={() => handleAnswerSelection(answer.answer_id)}
-                      disabled={userSelectedAnswer !== null || hasMovedToNextQuestion}
-                    />
-                    {answer.answer_text}
-                  </label>
-                </li>
-              ))}
-            </ul>
-            {userSelectedAnswer !== null && (
-              <div>
-                {isAnswerCorrect ? <p>Correct!</p> : <p>Incorrect!</p>}
-                <p>Correct answer: {currentQuestion.answers.find((answer) => answer.is_correct).answer_text}</p>
-              </div>
+    return (
+      <div>
+        {currentQuestion && (
+          <>
+            <div>
+              <p>{currentQuestion.question_text}</p>
+              <ul>
+                {currentQuestion.answers.map((answer) => (
+                  <li key={answer.answer_id}>
+                    <label>
+                      <input
+                        type="radio"
+                        name="answer"
+                        value={answer.answer_id}
+                        onChange={() => handleAnswerSelection(answer.answer_id)}
+                        disabled={userSelectedAnswer !== null || hasMovedToNextQuestion}
+                      />
+                      {answer.answer_text}
+                    </label>
+                  </li>
+                ))}
+              </ul>
+              {userSelectedAnswer !== null && (
+                <div>
+                  {isAnswerCorrect ? <p>Correct!</p> : <p>Incorrect!</p>}
+                  <p>Correct answer: {currentQuestion.answers.find((answer) => answer.is_correct).answer_text}</p>
+                  <p>Explanation: {currentQuestion.explanation}</p>
+                </div>
+              )}
+            </div>
+            {userSelectedAnswer !== null || hasMovedToNextQuestion ? (
+              <button onClick={() => handleNextQuestion(userSelectedAnswer !== null)}>Next Question</button>
+            ) : (
+              <p>Time remaining: {timer} seconds</p>
             )}
+          </>
+        )}
+  
+        {/* Display the score at the end of the quiz */}
+        {!currentQuestion && (
+          <div>
+            <p>Congratulations! You've completed the quiz.</p>
+            <p>Your Score: {scorePercentage.toFixed(2)}%</p>
+            <p>Correct Answers: {correctAnswers}</p>
+            <p>Incorrect Answers: {incorrectAnswers}</p>
+            <p>Unanswered Questions: {unansweredQuestions}</p>
           </div>
-          {userSelectedAnswer !== null || hasMovedToNextQuestion ? (
-            <button onClick={() => handleNextQuestion(userSelectedAnswer !== null)}>Next Question</button>
-          ) : (
-            <p>Time remaining: {timer} seconds</p>
-          )}
-        </>
-      )}
-
-      {/* Display the score at the end of the quiz */}
-      {!currentQuestion && (
-        <div>
-          <p>Congratulations! You've completed the quiz.</p>
-          <p>Your Score: {scorePercentage.toFixed(2)}%</p>
-          <p>Correct Answers: {correctAnswers}</p>
-          <p>Incorrect Answers: {incorrectAnswers}</p>
-          <p>Unanswered Questions: {unansweredQuestions}</p>
-          <button onClick={submitQuizResult}>Submit Quiz</button>
-        </div>
-      )}
-    </div>
-  );
-};
+        )}
+      </div>
+    );
+  };
 
 export default QuizPage;

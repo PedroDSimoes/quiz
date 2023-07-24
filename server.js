@@ -204,13 +204,13 @@ passport.use(
     });
   });
 
-app.get('/quiz/questions', async (req, res) => {
+  app.get('/quiz/questions', async (req, res) => {
     const { category, difficulty } = req.query;
   
     try {
-      // Fetch questions and their answers from the database based on the category and difficulty
+      // Fetch questions, answers, and explanations from the database based on the category and difficulty
       const query = `
-        SELECT q.question_id, q.question_text, a.answer_id, a.answer_text, a.is_correct
+        SELECT q.question_id, q.question_text, q.explanation, a.answer_id, a.answer_text, a.is_correct
         FROM questions q
         INNER JOIN answers a ON q.question_id = a.question_id
         INNER JOIN categories c ON q.category_id = c.category_id
@@ -228,6 +228,7 @@ app.get('/quiz/questions', async (req, res) => {
           questions.push({
             question_id: row.question_id,
             question_text: row.question_text,
+            explanation: row.explanation,
             answers: [
               { answer_id: row.answer_id, answer_text: row.answer_text, is_correct: row.is_correct },
             ],
