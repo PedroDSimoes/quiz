@@ -249,6 +249,25 @@ passport.use(
       return res.status(500).json({ error: 'Internal server error.' });
     }
   });
+
+  function generateNumericHash(identifier) {
+    const FNV_offset_basis = 14695981039346656037n; // FNV offset basis for 64-bit FNV-1a
+    const FNV_prime = 1099511628211n; // FNV prime for 64-bit FNV-1a
+    let numericHash = FNV_offset_basis;
+  
+    for (let i = 0; i < identifier.length; i++) {
+      numericHash ^= BigInt(identifier.charCodeAt(i)); // XOR the current character code with the hash
+      numericHash *= FNV_prime; // Multiply by the prime for the next iteration
+    }
+  
+    // Convert the numeric hash to a fixed 12-digit string representation
+    const fixedLengthHash = ('000000000000' + numericHash.toString()).slice(-12);
+  
+    // Extract the last 4 digits of the 12-digit hash as a 4-digit numeric hash
+    const fourDigitHash = fixedLengthHash.slice(-4);
+    
+    return fourDigitHash;
+  }
   
   app.post('/register', [
     body('username').isString().isLength({ min: 5 }).withMessage('Username must be at least 5 characters.'),
@@ -282,10 +301,13 @@ passport.use(
           return res.status(500).json({ error: 'Internal server error.' });
         }
   
-        // Insert the new user into the database with the hashed password
+        // Generate a numeric hash for the user ID
+        const userId = generateNumericHash(username); // Replace 'username' with a unique identifier for the user.
+  
+        // Insert the new user into the database with the hashed password and hashed user ID
         pool.query(
-          'INSERT INTO users (username, email, password) VALUES ($1, $2, $3) RETURNING user_id',
-          [username, email, hash], // Use the hash instead of the plain-text password
+          'INSERT INTO users (username, email, password, user_id) VALUES ($1, $2, $3, $4) RETURNING user_id',
+          [username, email, hash, userId], // Use the hash and the numeric hash for the user ID
           (err, result) => {
             if (err) {
               console.error('Error executing query:', err);

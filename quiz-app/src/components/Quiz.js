@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
  // Import the quiz.css file from the same folder
-
+import './Quiz.css';
 
 const QuizPage = () => {
   const location = useLocation();
@@ -179,55 +179,63 @@ const QuizPage = () => {
 
 
     return (
-      <div>
-        {currentQuestion && (
-          <>
-            <div>
-              <p>{currentQuestion.question_text}</p>
-              <ul>
-                {currentQuestion.answers.map((answer) => (
-                  <li key={answer.answer_id}>
-                    <label>
-                      <input
-                        type="radio"
-                        name="answer"
-                        value={answer.answer_id}
-                        onChange={() => handleAnswerSelection(answer.answer_id)}
-                        disabled={userSelectedAnswer !== null || hasMovedToNextQuestion}
-                      />
-                      {answer.answer_text}
-                    </label>
-                  </li>
-                ))}
-              </ul>
-              {userSelectedAnswer !== null && (
-                <div>
-                  {isAnswerCorrect ? <p>Correct!</p> : <p>Incorrect!</p>}
-                  <p>Correct answer: {currentQuestion.answers.find((answer) => answer.is_correct).answer_text}</p>
-                  <p>{currentQuestion.explanation}</p>
-                </div>
-              )}
-            </div>
-            {userSelectedAnswer !== null || hasMovedToNextQuestion ? (
-              <button onClick={() => handleNextQuestion(userSelectedAnswer !== null)}>Next Question</button>
-            ) : (
-              <p>Time remaining: {timer} seconds</p>
+      <div className="quiz-container">
+      {currentQuestion && (
+        <>
+          <div className="quiz-question">
+            <p>{currentQuestion.question_text}</p>
+            <ul className="quiz-options">
+              {currentQuestion.answers.map((answer) => (
+                <li key={answer.answer_id}>
+                  <label>
+                    <input
+                      type="radio"
+                      name="answer"
+                      value={answer.answer_id}
+                      onChange={() => handleAnswerSelection(answer.answer_id)}
+                      disabled={userSelectedAnswer !== null || hasMovedToNextQuestion}
+                    />
+                    {answer.answer_text}
+                  </label>
+                </li>
+              ))}
+            </ul>
+            {userSelectedAnswer !== null && (
+              <div className="quiz-feedback">
+                {isAnswerCorrect ? (
+                    <p className="quiz-feedback correct">Correct!</p>
+                  ) : (
+                    <p className="quiz-feedback incorrect">Incorrect!</p>
+                  )}
+                <p>Correct answer: {currentQuestion.answers.find((answer) => answer.is_correct).answer_text}</p>
+                <p>{currentQuestion.explanation}</p>
+              </div>
             )}
-          </>
-        )}
-  
-        {/* Display the score at the end of the quiz */}
-        {!currentQuestion && (
-          <div>
-            <p>Congratulations! You've completed the quiz.</p>
-            <p>Your Score: {scorePercentage.toFixed(2)}%</p>
-            <p>Correct Answers: {correctAnswers}</p>
-            <p>Incorrect Answers: {incorrectAnswers}</p>
-            <p>Unanswered Questions: {unansweredQuestions}</p>
-            <button onClick={handlePracticeAgainClick}>Practice again</button>
           </div>
-        )}
-      </div>
+          {userSelectedAnswer !== null || hasMovedToNextQuestion ? (
+            <button className="quiz-next-button" onClick={() => handleNextQuestion(userSelectedAnswer !== null)}>
+              Next Question
+            </button>
+          ) : (
+            <p className="quiz-timer">Time remaining: {timer} seconds</p>
+          )}
+        </>
+      )}
+    
+      {/* Display the score at the end of the quiz */}
+      {!currentQuestion && (
+        <div className="quiz-end-container">
+          <p>Congratulations! You've completed the quiz.</p>
+          <p>Your Score: {scorePercentage.toFixed(2)}%</p>
+          <p>Correct Answers: {correctAnswers}</p>
+          <p>Incorrect Answers: {incorrectAnswers}</p>
+          <p>Unanswered Questions: {unansweredQuestions}</p>
+          <button className="quiz-practice-again-button" onClick={handlePracticeAgainClick}>
+            Practice again
+          </button>
+        </div>
+      )}
+    </div>
     );
   };
 

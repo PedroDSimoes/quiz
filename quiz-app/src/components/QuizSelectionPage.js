@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import './QuizSelectionPage.css';
 
 const capitalizeFirstLetter = (string) => {
   return string.charAt(0).toUpperCase() + string.slice(1);
@@ -99,29 +100,61 @@ const QuizSelectionPage = () => {
 
   return (
     <div>
-      <h1>Select a Category</h1>
-      {/* History */}
-      <Link to="/quiz?category=History&difficulty=easy">History - Easy</Link>
-      <Link to="/quiz?category=History&difficulty=medium">History - Medium</Link>
-      <Link to="/quiz?category=History&difficulty=hard">History - Hard</Link>
+<div className="category-section">
 
-      {/* Science */}
-      <Link to="/quiz?category=Science&difficulty=easy">Science - Easy</Link>
-      <Link to="/quiz?category=Science&difficulty=medium">Science - Medium</Link>
-      <Link to="/quiz?category=Science&difficulty=hard">Science - Hard</Link>
+  <div className="category-card category-science">
+    <h2>Science</h2>
+    <button onClick={() => window.location.replace('/quiz?category=Science&difficulty=easy')}>
+      Easy
+    </button>
+    <button onClick={() => window.location.replace('/quiz?category=Science&difficulty=medium')}>
+      Medium
+    </button>
+    <button onClick={() => window.location.replace('/quiz?category=Science&difficulty=hard')}>
+      Hard
+    </button>
+  </div>
+  <div className="category-card category-geography">
+    <h2>Geography</h2>
+    <button onClick={() => window.location.replace('/quiz?category=Geography&difficulty=easy')}>
+      Easy
+    </button>
+    <button onClick={() => window.location.replace('/quiz?category=Geography&difficulty=medium')}>
+      Medium
+    </button>
+    <button onClick={() => window.location.replace('/quiz?category=Geography&difficulty=hard')}>
+      Hard
+    </button>
+  </div>
 
-      {/* Geography */}
-      <Link to="/quiz?category=Geography&difficulty=easy">Geography - Easy</Link>
-      <Link to="/quiz?category=Geography&difficulty=medium">Geography - Medium</Link>
-      <Link to="/quiz?category=Geography&difficulty=hard">Geography - Hard</Link>
-
-      {/* Music */}
-      <Link to="/quiz?category=Music&difficulty=easy">Music - Easy</Link>
-      <Link to="/quiz?category=Music&difficulty=medium">Music - Medium</Link>
-      <Link to="/quiz?category=Music&difficulty=hard">Music - Hard</Link>
-      <div>
+  <div className="category-card category-music">
+    <h2>Music</h2>
+    <button onClick={() => window.location.replace('/quiz?category=Music&difficulty=easy')}>
+      Easy
+    </button>
+    <button onClick={() => window.location.replace('/quiz?category=Music&difficulty=medium')}>
+      Medium
+    </button>
+    <button onClick={() => window.location.replace('/quiz?category=Music&difficulty=hard')}>
+      Hard
+    </button>
+  </div>
+  <div className="category-card category-history">
+  <h2>History</h2>
+  <button onClick={() => window.location.replace('/quiz?category=History&difficulty=easy')}>
+       Easy
+      </button>
+      <button onClick={() => window.location.replace('/quiz?category=History&difficulty=medium')}>
+        Medium
+      </button>
+      <button onClick={() => window.location.replace('/quiz?category=History&difficulty=hard')}>
+        Hard
+      </button>
+  </div>
+</div>
+      <div className="average-scores-section">
     {/* ... */}
-    <h2>Average Scores</h2>
+    <h2>Your Current Performance:</h2>
     {Object.entries(averageScores).map(([categoryDifficulty, score]) => {
       const [category, difficulty] = categoryDifficulty.split('_');
       const formattedScore = score.toFixed(2);
@@ -133,6 +166,7 @@ const QuizSelectionPage = () => {
     })}
     {/* ... */}
   </div>
+  <button onClick={handleLogout} className="logout-button">Logout</button>
     </div>
   );
 };

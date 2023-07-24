@@ -1,0 +1,143 @@
+/* Quiz container */
+.quiz-container {
+    max-width: 600px;
+    margin: 30px auto;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    color: rgb(62, 59, 59);
+    background-color: #f9f9f9; /* Add a light background color */
+  }
+  
+  /* Quiz question */
+  .quiz-question {
+    margin-bottom: 20px;
+  }
+  
+  .quiz-question p {
+    font-size: 18px;
+    font-weight: bold;
+    margin: 10px 0;
+  }
+  
+  .quiz-options {
+    list-style: none;
+    padding: 0;
+    border: 1px solid #ddd; /* Add a border to the options */
+  }
+  
+  .quiz-options li {
+    margin-bottom: 10px;
+  }
+  
+  .quiz-options label {
+    display: block;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
+  }
+  
+  .quiz-options input[type="radio"] {
+    display: inline-block;
+    margin-right: 10px;
+    cursor: pointer;
+    transform: scale(1.5);
+  }
+  
+  .quiz-options label:hover {
+    background-color: #4e9ba8;
+    border-color: #bbb;
+  }
+  
+  /* Quiz feedback */
+  .quiz-feedback {
+    margin-top: 20px;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #f0f0f0;
+  }
+  
+  .quiz-feedback p {
+    margin: 5px 0;
+  }
+  
+  .quiz-feedback p:first-child {
+    font-weight: bold;
+  }
+  
+  .quiz-feedback p:last-child {
+    color: #555;
+  }
+  
+  /* Next button and timer */
+  .quiz-next-button {
+    display: block;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 15px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin: 20px auto;
+  }
+  
+  .quiz-next-button:hover {
+    background-color: #0056b3;
+  }
+  
+  .quiz-timer {
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 10px;
+    color: orangered;
+  }
+  
+  /* End container */
+  .quiz-end-container {
+    text-align: center;
+    padding: 20px;
+  }
+  
+  .quiz-end-container p {
+    font-size: 18px;
+    margin: 10px 0;
+  }
+  
+  .quiz-practice-again-button {
+    display: inline-block;
+    background-color: #19658c;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .quiz-practice-again-button:hover {
+    background-color: #1e1e68;
+  }
+  
+  .quiz-feedback.correct {
+    background-color: #d4edda; /* Green background for correct answer feedback */
+    color: #155724; /* Dark green text color */
+    padding: 8px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+  }
+  
+  /* Incorrect answer feedback */
+  .quiz-feedback.incorrect {
+    background-color: #f8d7da; /* Red background for incorrect answer feedback */
+    color: #721c24; /* Dark red text color */
+    padding: 8px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+  }
