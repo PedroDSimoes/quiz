@@ -322,6 +322,29 @@ passport.use(
     });
   });
 
+  app.post('/checkUsername', [
+    body('username').isString().isLength({ min: 5 }).withMessage('Username must be at least 5 characters.'),
+  ], (req, res) => {
+    // Check for validation errors
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+  
+    const { username } = req.body;
+  
+    // Check if the username already exists in the database
+    pool.query('SELECT EXISTS(SELECT 1 FROM users WHERE username = $1)', [username], (error, result) => {
+      if (error) {
+        console.error('Error executing query:', error);
+        return res.status(500).json({ error: 'Internal server error.' });
+      }
+  
+      const usernameExists = result.rows[0].exists;
+      return res.status(200).json({ exists: usernameExists });
+    });
+  });
+
   app.post('/quiz/submit', async (req, res) => {
     const { user_id, category_name, difficulty_level, score } = req.body;
   

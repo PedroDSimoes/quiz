@@ -18,6 +18,8 @@ const FrontPage = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [registrationError, setRegistrationError] = useState('');
   const [registrationSuccess, setRegistrationSuccess] = useState(false);
+  const [loginAttemptFailed, setLoginAttemptFailed] = useState(false);
+
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -26,37 +28,57 @@ const FrontPage = () => {
     if (registrationPassword !== confirmPassword) {
       setRegistrationError('Passwords do not match.');
       return;
-      
-      
     }
-
+  
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(registrationEmail)) {
       setRegistrationError('Please enter a valid email address.');
       return;
     }
-
+  
+    // Check if the username already exists
     axios
-      .post('http://localhost:8001/register', {
+      .post('http://localhost:8001/checkUsername', {
         username: registrationUsername,
-        email: registrationEmail,
-        password: registrationPassword,
       })
       .then((response) => {
-        console.log(response.data);
-        setRegistrationSuccess(true);
-        setRegistrationError('');
-        // Dispatch an action to your Redux store for login, if needed
-        // dispatch(loginUser(response.data));
+        if (response.data.exists) {
+          setRegistrationError('Username already exists. Please choose a different username.');
+        } else {
+          // If the username does not exist, proceed with registration
+          axios
+            .post('http://localhost:8001/register', {
+              username: registrationUsername,
+              email: registrationEmail,
+              password: registrationPassword,
+            })
+            .then((response) => {
+              console.log(response.data);
+              setRegistrationSuccess(true);
+              setRegistrationError('');
+              // Dispatch an action to your Redux store for login, if needed
+              // dispatch(loginUser(response.data));
+  
+              // Clear all registration fields after a successful registration
+              setRegistrationUsername('');
+              setRegistrationEmail('');
+              setRegistrationPassword('');
+              setConfirmPassword('');
+            })
+            .catch((error) => {
+              console.error(error);
+              if (error.response && error.response.data && error.response.data.errors) {
+                setRegistrationError(error.response.data.errors[0].msg);
+              } else {
+                setRegistrationError('Registration failed. Please try again later.');
+              }
+              setRegistrationSuccess(false);
+            });
+        }
       })
       .catch((error) => {
         console.error(error);
-        if (error.response && error.response.data && error.response.data.errors) {
-          setRegistrationError(error.response.data.errors[0].msg);
-        } else {
-          setRegistrationError('Registration failed. Please try again later.');
-        }
-        setRegistrationSuccess(false);
+        setRegistrationError('Failed to check username availability. Please try again later.');
       });
   };
 
@@ -72,6 +94,9 @@ const FrontPage = () => {
         navigate('/quiz/select');
         // Dispatch an action to your Redux store for login, if needed
         // dispatch(loginUser(response.data));
+
+        // Reset login attempt failed state
+        setLoginAttemptFailed(false);
       })
       .catch((error) => {
         console.error(error);
@@ -80,6 +105,9 @@ const FrontPage = () => {
         } else {
           setLoginError('Login failed. Please check your credentials and try again.');
         }
+
+        // Set login attempt failed state
+        setLoginAttemptFailed(true);
       });
   };
 
@@ -89,6 +117,11 @@ const FrontPage = () => {
       <nav className="navbar">
         <div className="login-section">
           {loginError && <p style={{ color: 'red' }}>{loginError}</p>}
+          {loginAttemptFailed && (
+          <p style={{ color: 'red' }}>
+            <a href="#" id="psrest">Forgot Password?</a>
+          </p>
+        )}
           <input
             type="text"
             placeholder="Username"

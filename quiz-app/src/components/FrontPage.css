@@ -212,3 +212,7 @@
 .mission-section {
   animation: slideInFromLeft 1s ease;
 }
+
+#psrest {
+  font-size: 1rem;
+}
