@@ -260,13 +260,13 @@ passport.use(
       numericHash *= FNV_prime; // Multiply by the prime for the next iteration
     }
   
-    // Convert the numeric hash to a fixed 12-digit string representation
-    const fixedLengthHash = ('000000000000' + numericHash.toString()).slice(-12);
+    // Convert the numeric hash to a fixed 20-digit string representation
+    const fixedLengthHash = ('00000000000000000000' + numericHash.toString()).slice(-20);
   
-    // Extract the last 4 digits of the 12-digit hash as a 4-digit numeric hash
-    const fourDigitHash = fixedLengthHash.slice(-4);
-    
-    return fourDigitHash;
+    // Extract the last 8 digits of the 20-digit hash as an 8-digit numeric hash
+    const eightDigitHash = fixedLengthHash.slice(-8);
+  
+    return eightDigitHash;
   }
   
   app.post('/register', [
