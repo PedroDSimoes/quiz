@@ -1072,8 +1072,6 @@ COPY public.answers (answer_id, answer_text, is_correct, question_id, explanatio
 917	Quebec	f	229	\N
 918	Bahamas	f	230	\N
 919	Virgin Islands	f	230	\N
-920	Greater Antilles	f	230	\N
-921	Lesser Antilles	t	230	\N
 922	California	t	231	\N
 923	New York	f	231	\N
 924	Texas	f	231	\N
@@ -1087,6 +1085,7 @@ COPY public.answers (answer_id, answer_text, is_correct, question_id, explanatio
 932	Australia	f	233	\N
 933	Europe	f	233	\N
 934	France	f	234	\N
+921	Lesser Antilles	f	230	\N
 935	Germany	t	234	\N
 936	Italy	f	234	\N
 937	Spain	f	234	\N
@@ -1198,10 +1197,6 @@ COPY public.answers (answer_id, answer_text, is_correct, question_id, explanatio
 1043	North America	f	261	\N
 1044	South America	f	261	\N
 1045	Asia	f	261	\N
-1046	-89.2øC (-128.6øF)	t	262	\N
-1047	-75.3øC (-103.5øF)	f	262	\N
-1048	-68.0øC (-90.4øF)	f	262	\N
-1049	-94.7øC (-138.5øF)	f	262	\N
 1050	Colombia and Panama	t	263	\N
 1051	Colombia and Venezuela	f	263	\N
 1052	Panama and Costa Rica	f	263	\N
@@ -1248,6 +1243,9 @@ COPY public.answers (answer_id, answer_text, is_correct, question_id, explanatio
 1093	Copper mining	f	273	\N
 1094	Poland	t	274	\N
 1095	Germany	f	274	\N
+1049	-94.7 °C (-138.5 °F)	f	262	\N
+1048	-68.0 °C (-90.4 °F)	f	262	\N
+1047	-75.3 °C (-103.5 °F)	f	262	\N
 1096	Czech Republic	f	274	\N
 1097	Austria	f	274	\N
 1098	Pristina	t	275	\N
@@ -1698,7 +1696,6 @@ COPY public.answers (answer_id, answer_text, is_correct, question_id, explanatio
 1567	Tony Visconti	f	392	\N
 1566	Brian Eno	t	392	\N
 1565	12 main playing strings	f	391	\N
-1564	15 main playing strings	t	391	\N
 1563	20 main playing strings	f	391	\N
 1562	18 main playing strings	f	391	\N
 1561	4/4	f	390	\N
@@ -1709,6 +1706,7 @@ COPY public.answers (answer_id, answer_text, is_correct, question_id, explanatio
 1556	Franz Joseph Haydn	f	389	\N
 1555	Wolfgang Amadeus Mozart	t	389	\N
 1554	Ludwig van Beethoven	f	389	\N
+1564	7 main playing strings	t	391	\N
 1583	John Cage	f	396	\N
 1716	Medieval	t	429	\N
 1715	Classical	f	429	\N
@@ -1771,9 +1769,9 @@ COPY public.answers (answer_id, answer_text, is_correct, question_id, explanatio
 1656	Chick Corea	f	414	\N
 1655	Thelonious Monk	f	414	\N
 1654	Duke Ellington	f	414	\N
-1653	Aria	t	413	\N
+1609	Absolute Music	f	402	\N
 1652	Intermezzo	f	413	\N
-1651	Recitative	f	413	\N
+1653	Aria	f	413	\N
 1650	Overture	f	413	\N
 1649	Minor seventh	f	412	\N
 1648	Major third	f	412	\N
@@ -1792,7 +1790,7 @@ COPY public.answers (answer_id, answer_text, is_correct, question_id, explanatio
 1635	Trumpet	f	409	\N
 1634	Flute	f	409	\N
 1633	Steve Reich	f	408	\N
-1632	Gy”rgy Ligeti	f	408	\N
+1585	György Ligeti\r\n	f	396	\N
 1631	Karlheinz Stockhausen	f	408	\N
 1630	John Cage	t	408	\N
 1629	Nina Simone	f	407	\N
@@ -1813,10 +1811,8 @@ COPY public.answers (answer_id, answer_text, is_correct, question_id, explanatio
 1612	Very soft	t	403	\N
 1611	Moderately loud	f	403	\N
 1610	Very loud	f	403	\N
-1609	Absolute Music	t	402	\N
 1608	Sonata	f	402	\N
 1607	Concerto	f	402	\N
-1606	Symphony	f	402	\N
 1605	Sonny Rollins	f	401	\N
 1604	Lester Young	f	401	\N
 1603	Charlie Parker	t	401	\N
@@ -1833,7 +1829,7 @@ COPY public.answers (answer_id, answer_text, is_correct, question_id, explanatio
 1592	Cherubino	f	398	\N
 1591	Count Almaviva	f	398	\N
 1590	Figaro	t	398	\N
-1585	Gy”rgy Ligeti	f	396	\N
+1651	Recitative	t	413	\N
 1584	Harry Partch	f	396	\N
 1717	Renaissance	f	429	\N
 1582	Karlheinz Stockhausen	t	396	\N
@@ -1845,11 +1841,11 @@ COPY public.answers (answer_id, answer_text, is_correct, question_id, explanatio
 1576	Igor Stravinsky	t	394	\N
 1575	Pyotr Ilyich Tchaikovsky	f	394	\N
 1718	Magnetism	f	430	\N
-1719	Inertia	t	430	\N
 1720	Friction	f	430	\N
 1721	Electromagnetism	f	430	\N
 1722	Oxygen	f	431	\N
 1723	Nitrogen	f	431	\N
+1632	György Ligeti\r\n	f	408	\N
 1724	Carbon Dioxide	t	431	\N
 1725	Hydrogen	f	431	\N
 1726	Melting	f	432	\N
@@ -1988,10 +1984,6 @@ COPY public.answers (answer_id, answer_text, is_correct, question_id, explanatio
 1859	Calf	f	465	\N
 1860	Cow	f	465	\N
 1861	Steer	f	465	\N
-1866	32øF (0øC)	f	467	\N
-1867	212øF (100øC)	t	467	\N
-1868	98.6øF (37øC)	f	467	\N
-1869	68øF (20øC)	f	467	\N
 1870	Elephant	t	468	\N
 1871	Giraffe	f	468	\N
 1872	Rhinoceros	f	468	\N
@@ -2012,6 +2004,8 @@ COPY public.answers (answer_id, answer_text, is_correct, question_id, explanatio
 1887	Blue Whale	t	472	\N
 1888	Giraffe	f	472	\N
 1889	Giant Squid	f	472	\N
+1868	98.6°F (37°C)	f	467	\N
+1869	68°F (20°C)	f	467	\N
 1890	Sight	f	473	\N
 1891	Hearing	f	473	\N
 1892	Taste	f	473	\N
@@ -2313,8 +2307,6 @@ COPY public.answers (answer_id, answer_text, is_correct, question_id, explanatio
 2188	Endoplasmic reticulum	f	547	\N
 2189	Ribosome	t	547	\N
 2190	Geometric isomerism	f	548	\N
-2191	Optical isomerism	f	548	\N
-2192	Conformational isomerism	t	548	\N
 2193	Structural isomerism	f	548	\N
 2194	Event horizon	t	549	\N
 2195	Ergosphere	f	549	\N
@@ -2326,6 +2318,8 @@ COPY public.answers (answer_id, answer_text, is_correct, question_id, explanatio
 2201	Amygdala	f	550	\N
 2202	Pauli exclusion principle	f	551	\N
 2203	Heisenberg uncertainty principle	t	551	eeeeeeee
+2192	Stereoisomerism	t	548	\N
+2191	Conformational isomerism	f	548	\N
 2221	Nitrogen fixation	f	555	eeeeeeee
 2220	Denitrification	t	555	eeeeeeee
 2219	Ammonification	f	555	eeeeeeee
@@ -2343,9 +2337,15 @@ COPY public.answers (answer_id, answer_text, is_correct, question_id, explanatio
 2207	Weathering	f	552	eeeeeeee
 2206	Erosion	f	552	eeeeeeee
 2205	Planck uncertainty principle	f	551	eeeeeeee
-2204	Schr”dinger uncertainty principle	f	551	eeeeeeee
 678	Antarctic Desert	t	170	\N
 1146	Greenland	f	287	\N
+1719	Gravity	t	430	\N
+1866	32°F (0°C)	f	467	\N
+1867	212°F (100°C)	t	467	\N
+2204	Schrödinger uncertainty principle	f	551	eeeeeeee
+920	Greater Antilles	t	230	\N
+1046	-89.2 °C (-128.6 °F)	t	262	\N
+1606	Symphonic Music	t	402	\N
 \.
 
 
@@ -2434,7 +2434,6 @@ COPY public.questions (question_id, question_text, difficulty_level, category_id
 396	Which microtonal composer and musical theorist is known for developing the 43-tone scale and composing the piece "Mantra" for two pianos, electronics, and voices?	hard	3	\r\nThe microtonal composer and musical theorist known for developing the 43-tone scale and composing the piece "Mantra" for two pianos, electronics, and voices is Karlheinz Stockhausen.\r\n\r\nKarlheinz Stockhausen was a highly influential and innovative German composer known for his groundbreaking contributions to electronic music and his exploration of new and unconventional musical techniques. "Mantra," composed in 1970, is one of his significant works and is recognized for its complex structure, use of microtonal scales, and incorporation of electronic elements. Stockhausen's exploration of microtonal scales and electronic soundscapes expanded the boundaries of contemporary music and earned him a prominent place in the avant-garde music movement of the 20th century.
 401	Which jazz saxophonist is often referred to as the "Bird" and was a central figure in the development of bebop?	hard	3	The jazz saxophonist who is often referred to as the "Bird" and was a central figure in the development of bebop is Charlie Parker. Charlie Parker, also known as "Bird," was an American jazz alto saxophonist and composer. He was a leading figure in the bebop movement during the 1940s, revolutionizing jazz with his innovative improvisation, complex harmonic language, and melodic phrasing. Parker's virtuosic playing and musical ideas had a profound impact on the evolution of jazz, influencing generations of musicians and becoming an enduring legend in the history of jazz music.\r\n\r\n\r\n\r\n\r\n
 408	Which avant-garde composer, famous for his prepared piano pieces, composed "Sonatas and Interludes" for prepared piano?	hard	3	The avant-garde composer famous for his prepared piano pieces, including "Sonatas and Interludes," is John Cage. John Cage was an influential American composer, music theorist, writer, and artist, known for his experimental and groundbreaking approach to music composition.\r\n\r\n"Sonatas and Interludes" is one of Cage's most notable works for prepared piano. The piece was composed between 1946 and 1948 and consists of 16 sonatas and four interludes. In a prepared piano, various objects like screws, bolts, and pieces of rubber are strategically placed between the strings to alter the instrument's timbre and create unique and otherworldly sounds. Cage's innovative use of the prepared piano expanded the possibilities of piano music and continues to be a significant contribution to the contemporary classical music repertoire.
-405	Which early 20th-century composer is known for his use of "tone clusters," a technique where the pianist plays a group of adjacent notes with the fist or forearm?	hard	3	\N
 358	In which decade did the punk rock movement gain popularity?	medium	3	The punk rock movement gained popularity in the 1970s. It emerged as a response to the mainstream music of the time and was characterized by its raw and aggressive sound, anti-establishment ethos, and DIY (do-it-yourself) approach to music production and distribution. Punk rock bands like The Ramones, The Sex Pistols, The Clash, and others were at the forefront of the movement, challenging the norms of the music industry and society at large. Punk rock's impact extended beyond the 1970s, influencing various subgenres and becoming a significant cultural and musical movement that continues to resonate with audiences to this day.\r\n\r\n\r\n\r\n\r\n
 362	"Superstition" and "Isnt She Lovely" are famous songs by which iconic musician?	medium	3	"Superstition" and "Isn't She Lovely" are famous songs by the iconic musician Stevie Wonder. Stevie Wonder, a highly influential singer, songwriter, and multi-instrumentalist, is known for his soulful voice, exceptional musical talent, and contributions to the realms of soul, R&B, and pop music. Both "Superstition" and "Isn't She Lovely" are among his many hits that have left a lasting impact on the music industry and continue to be cherished by audiences worldwide.\r\n\r\n\r\n\r\n\r\n
 367	What is the name of the music streaming service founded by Daniel Ek and Martin Lorentzon?	medium	3	The music streaming service founded by Daniel Ek and Martin Lorentzon is called Spotify. Spotify is a popular digital music, podcast, and video streaming service that provides users with access to a vast library of songs and other audio content from various artists and genres. It was launched in 2008 and has since become one of the leading music streaming platforms globally, offering both free ad-supported and premium subscription-based services.\r\n\r\n\r\n\r\n\r\n
@@ -2463,7 +2462,6 @@ COPY public.questions (question_id, question_text, difficulty_level, category_id
 528	Which element has the highest electronegativity value on the Pauling scale?	hard	4	Fluorine (F) has the highest electronegativity value on the Pauling scale. The electronegativity of an element is a measure of its ability to attract and hold electrons when it forms chemical bonds with other atoms. Fluorine, being the most electronegative element, has a Pauling electronegativity value of 3.98. This high electronegativity makes fluorine very reactive and capable of forming strong bonds with other elements, often resulting in compounds with distinct properties, such as fluorides.
 532	What is the name of the protein responsible for oxygen transport in red blood cells?	hard	4	\r\nThe name of the protein responsible for oxygen transport in red blood cells is "hemoglobin." Hemoglobin is a complex protein found in red blood cells (erythrocytes) and is essential for the transportation of oxygen from the lungs to various tissues and organs throughout the body.\r\n\r\nHemoglobin has a unique structure that allows it to bind to oxygen in the lungs, where oxygen concentrations are high, and release it in areas with lower oxygen concentrations, such as tissues and muscles
 218	The city of Jerusalem is located in which region of the world?	medium	2	The city of Jerusalem is located in the region known as the Middle East. Specifically, it is situated in the eastern part of the Mediterranean, between the Mediterranean Sea and the Dead Sea. Jerusalem is one of the oldest cities in the world and holds great significance in several major religions, including Judaism, Christianity, and Islam. It is a city with a complex history and is considered a holy site and a focal point of religious pilgrimage for many believers.\r\n\r\n\r\n\r\n\r\n
-542	What type of rock is formed from the cooling and solidification of lava on the Earths surface?	hard	4	The type of rock that is formed from the cooling and solidification of lava on the Earth's surface is called "extrusive igneous rock." Extrusive igneous rocks are formed when lava, which is molten rock material that reaches the Earth's surface during volcanic eruptions, cools rapidly and solidifies.\r\n\r\nAs lava emerges onto the surface, it is exposed to lower temperatures and atmospheric pressure, leading to relatively quick cooling. This rapid cooling prevents the growth of large mineral crystals, resulting in fine-grained or glassy textures in the extrusive igneous rocks. Examples of extrusive igneous rocks include basalt, andesite, and rhyolite, each with distinctive mineral compositions and appearances.
 545	Which of Newtons laws of motion explains the relationship between an object mass, acceleration, and the applied force?	hard	4	Newton's second law of motion explains the relationship between an object's mass, acceleration, and the applied force. It states that the acceleration of an object is directly proportional to the net force acting on it and inversely proportional to its mass. In simpler terms, the greater the force applied to an object, the greater its acceleration, and the heavier the object, the smaller its acceleration for a given force. This law is mathematically expressed as F = ma, where F is the net force, m is the mass of the object, and a is its acceleration.\r\n\r\n\r\n\r\n\r\n
 548	Which type of isomerism occurs when two molecules have the same molecular formula and the same connectivity of atoms but differ in the spatial arrangement of their atoms?	hard	4	The type of isomerism that occurs when two molecules have the same molecular formula and the same connectivity of atoms but differ in the spatial arrangement of their atoms is called "stereoisomerism."\r\n\r\nStereoisomers are a specific type of isomers that have identical chemical bonds but differ in how the atoms are arranged in three-dimensional space.
 1	What year was the Declaration of Independence signed?	easy	1	The Declaration of Independence was signed on July 4, 1776. This historic document marked the formal separation of the thirteen American colonies from Great Britain and laid the foundation for the United States of America.
@@ -2791,7 +2789,6 @@ COPY public.questions (question_id, question_text, difficulty_level, category_id
 393	In music theory, what is the term for a chord consisting of four notes, typically made up of the root, third, fifth, and seventh?	hard	3	In music theory, the term for a chord consisting of four notes, typically made up of the root, third, fifth, and seventh, is a "seventh chord." Seventh chords are an essential part of harmony and are widely used in various music genres, including jazz, blues, and classical music. The seventh chord adds an additional layer of complexity and richness to the harmony, making it a common choice for creating tension and resolving to other chords in a musical progression. Depending on the type of seventh chord, it can have different qualities, such as major seventh, minor seventh, dominant seventh, and diminished seventh.\r\n\r\n\r\n\r\n\r\n
 394	Which Russian composers work "The Rite of Spring" famously caused a riot during its premiere in Paris in 1913?	hard	3	The Russian composer whose work "The Rite of Spring" famously caused a riot during its premiere in Paris in 1913 was Igor Stravinsky. "The Rite of Spring," or "Le Sacre du printemps" in French, is a groundbreaking ballet and orchestral work that pushed the boundaries of music and dance during its time. The avant-garde and unconventional nature of the music, combined with the innovative choreography by Vaslav Nijinsky, provoked a strong reaction from the audience at the Théâtre des Champs-Élysées in Paris on May 29, 1913. The performance resulted in a notorious riot, with disagreements and disturbances among the audience members, but the work went on to become a pivotal and influential piece in the history of music and the performing arts.\r\n\r\n\r\n\r\n\r\n
 395	What is the name of the style of African-American music that emerged in the 1980s and features elements of funk, soul, and R&B, often characterized by its use of drum machines and synthesizers?	hard	3	The name of the style of African-American music that emerged in the 1980s, featuring elements of funk, soul, and R&B, often characterized by its use of drum machines and synthesizers, is "New Jack Swing."\r\n\r\nNew Jack Swing was a popular music genre that integrated traditional R&B and soul sounds with modern hip-hop elements, including the use of drum machines, synthesizers, and rap-style vocals. It was a significant part of the urban music landscape during the late 1980s and early 1990s, with artists like Teddy Riley, Keith Sweat, Bobby Brown, and Janet Jackson being some of the prominent figures associated with the genre. New Jack Swing brought a fresh and danceable sound to the music scene, influencing subsequent styles of R&B and hip-hop.
-398	In the opera "The Marriage of Figaro" by Mozart, which character sings the famous aria "Non pi— andrai" in Act 1?	hard	3	In the opera "The Marriage of Figaro" by Mozart, the character who sings the famous aria "Non più andrai" in Act 1 is Figaro himself. "Non più andrai" is an aria sung by Figaro, the witty and clever servant, in which he teases his master, Count Almaviva's page, Cherubino. In the aria, Figaro tells Cherubino that his carefree days as a young page are over, and he will now serve in the military, leaving behind his flirtatious escapades. The lively and humorous aria is one of the highlights of the opera and showcases Mozart's skill in capturing the characters' personalities through music.\r\n\r\n\r\n\r\n\r\n
 399	What is the name of the technique used in flamenco guitar playing, where the player rapidly taps the fingers against the guitar strings to produce a percussive sound?	hard	3	The technique used in flamenco guitar playing, where the player rapidly taps the fingers against the guitar strings to produce a percussive sound, is called "rasgueado" or "rasgueo." Rasgueado is an essential and distinctive flamenco guitar technique, characterized by its rapid and rhythmic strumming or flicking motion of the fingers. It allows the guitarist to create a vibrant and expressive percussive effect, adding to the rhythmic complexity and intensity of flamenco music. The rasgueado technique is a challenging skill to master, but it is fundamental to capturing the authentic flamenco guitar sound.\r\n\r\n\r\n\r\n\r\n
 400	The "Well-Tempered Clavier" is a collection of solo keyboard music composed by which Baroque composer?	hard	3	The "Well-Tempered Clavier" is a collection of solo keyboard music composed by Johann Sebastian Bach, the renowned Baroque composer and musician. The work is known as "Das Wohltemperierte Klavier" in German. It consists of two volumes, each containing 24 preludes and fugues, written in all major and minor keys, showcasing Bach's mastery of counterpoint and keyboard composition. The "Well-Tempered Clavier" is not only a remarkable musical achievement but also a valuable pedagogical resource for keyboard students and performers, serving as a testament to Bach's profound influence on the development of Western classical music.\r\n\r\n\r\n\r\n\r\n
 402	What is the term for a musical composition designed to be performed by an orchestra but not accompanied by a stage action, scenery, or costume?	hard	3	The term for a musical composition designed to be performed by an orchestra but not accompanied by a stage action, scenery, or costume is "symphonic music" or "symphonic work." Symphonic music is a form of classical music that is written for and performed by a symphony orchestra, typically consisting of multiple movements or sections. Unlike an opera or ballet, symphonic music is purely instrumental and does not have any associated stage performance or theatrical elements. It is focused solely on the music and allows the orchestra to showcase its full range of instruments and musical capabilities. Examples of symphonic works include symphonies, overtures, suites, and tone poems.\r\n\r\n\r\n\r\n\r\n
@@ -2888,7 +2885,6 @@ COPY public.questions (question_id, question_text, difficulty_level, category_id
 520	What is the name of the theory that explains the sudden mass extinction of dinosaurs?	medium	4	The theory that explains the sudden mass extinction of dinosaurs and many other species at the end of the Cretaceous period is known as the "asteroid impact theory" or the "impact hypothesis." This theory proposes that a massive asteroid or comet impact on the Earth, around 66 million years ago, was the primary cause of the Cretaceous-Paleogene (K-Pg) extinction event.\r\n\r\nAccording to this theory, the impact of the asteroid or comet would have caused catastrophic changes in the Earth's environment, leading to widespread fires, climate disruption, and a "nuclear winter" effect due to the release of dust and debris into the atmosphere. These dramatic environmental changes are believed to have significantly affected ecosystems worldwide, resulting in the extinction of approximately 75 percent of all species on Earth, including the non-avian dinosaurs. Evidence supporting this theory includes the discovery of a large impact crater called the Chicxulub crater in the Yucatán Peninsula, Mexico, which is dated to the same time as the mass extinction event.
 521	What is the study of fungi called?	medium	4	The study of fungi is called "mycology." Mycology is a branch of biology that focuses on the scientific study of fungi, which are a diverse group of organisms separate from plants, animals, and bacteria. Fungi play crucial roles in various ecosystems as decomposers, symbionts, and pathogens. Mycologists study their taxonomy, anatomy, physiology, ecology, and genetics to understand their diversity, evolutionary history, and ecological importance. Additionally, mycology has practical applications in areas such as medicine (e.g., antifungal drugs), agriculture (e.g., biocontrol agents), and food production (e.g., fermentation processes).\r\n\r\n\r\n\r\n\r\n
 522	What term refers to the process of converting saltwater into freshwater?	medium	4	The term that refers to the process of converting saltwater into freshwater is "desalination." Desalination is a method used to remove salt and other minerals from seawater, making it suitable for various purposes, including drinking, irrigation, and industrial use. The most common desalination techniques include distillation (such as multi-stage flash distillation and reverse osmosis). As freshwater resources become increasingly scarce in some regions, desalination has become an essential technology to meet the growing demand for clean water.\r\n\r\n\r\n\r\n\r\n
-523	What is the force that opposes the motion of objects through a fluid (liquid or gas)?	medium	4	The force that opposes the motion of objects through a fluid (liquid or gas) is called "drag" or "fluid resistance." Drag is a frictional force that acts in the opposite direction to the motion of the object. When an object moves through a fluid, it has to push aside the fluid particles, and this interaction results in the generation of drag.\r\n\r\nThe amount of drag experienced by an object depends on several factors, such as the shape and size of the object, the speed at which it moves through the fluid, and the properties of the fluid itself (e.g., viscosity and density). For example, streamlined and aerodynamic shapes experience less drag compared to objects with irregular shapes.
 525	Which spacecraft was launched by NASA in 1977 and has now left the solar system?	medium	4	\r\nThe spacecraft launched by NASA in 1977 and has now left the solar system is the "Voyager 1" probe. Voyager 1 was launched on September 5, 1977, and its primary mission was to study the outer planets of our solar system, including Jupiter and Saturn. After completing its mission objectives, Voyager 1 continued its journey outward, venturing beyond the heliosphere, which is the region dominated by the solar wind and magnetic field from the Sun.\r\n\r\nOn August 25, 2012, Voyager 1 officially became the first human-made object to enter interstellar space, marking its departure from the influence of the Sun and the solar system. Despite its great distance from Earth, Voyager 1 continues to communicate with NASA and send valuable scientific data back to us. It remains one of the most remarkable and enduring space exploration missions in history.
 526	What phenomenon describes the bending of light around massive objects due to gravity?	hard	4	The phenomenon that describes the bending of light around massive objects due to gravity is called "gravitational lensing." Gravitational lensing occurs when a massive object, such as a galaxy or a black hole, warps the spacetime around it, creating a gravitational field that can bend the path of light rays passing nearby.\r\n\r\nThis effect was first predicted by Albert Einstein's theory of general relativity in 1915. According to the theory, the presence of mass causes spacetime to curve, and light traveling through this curved spacetime follows a curved path. When a distant light source is perfectly aligned with a massive object and an observer on Earth, the light from the source appears distorted, magnified, or even multiplied, creating multiple images of the same object.
 527	Which of the following organelles is responsible for the synthesis of ATP and is often referred to as the "powerhouse" of the cell?	hard	4	ATP (adenosine triphosphate) is the primary source of energy that cells use to carry out various functions and processes. Mitochondria are often referred to as the "powerhouses" of the cell because they produce the majority of ATP needed to fuel cellular activities. This process occurs within the inner mitochondrial membrane, and the ATP generated is then used as an energy currency to drive various cellular functions, including muscle contraction, active transport, and synthesis of molecules.
@@ -2906,14 +2902,18 @@ COPY public.questions (question_id, question_text, difficulty_level, category_id
 541	What elementary particle is responsible for mediating the electromagnetic force and is exchanged in interactions involving electrically charged particles?	hard	4	Photons are fundamental particles of light and electromagnetic radiation. They carry the electromagnetic force, which includes interactions between electrically charged particles, such as electrons and protons.\r\n\r\nWhen charged particles interact, they exchange photons as carriers of the electromagnetic force. For example, when two electrons repel each other due to their like charges, they do so by exchanging virtual photons between them. Similarly, photons are involved in the absorption and emission of light, which is an electromagnetic phenomenon.\r\n\r\nIn quantum field theory, which describes the behavior of particles and forces at the subatomic level, photons are considered force-carrying gauge bosons for the electromagnetic force. They play a crucial role in the interactions between charged particles and are essential for understanding electromagnetism at the quantum level.
 543	Which class of antibodies is the first to be produced during an immune response and plays a crucial role in the activation of other immune cells?	hard	4	\r\nThe class of antibodies that is the first to be produced during an immune response and plays a crucial role in the activation of other immune cells is "IgM" (Immunoglobulin M). IgM is one of the five main classes of immunoglobulins (antibodies) present in the human immune system.\r\n\r\nWhen the body encounters a new pathogen or foreign substance, such as a virus or bacterium, B cells in the immune system produce IgM antibodies as the initial response. IgM antibodies are characterized by their pentameric structure, meaning they consist of five antibody units linked together. This pentameric arrangement allows IgM to be efficient in agglutinating (clumping together) and neutralizing pathogens, helping to contain the infection.
 544	Which nanomaterial exhibits the phenomenon of plasmon resonance, making it useful in applications like nanoscale imaging and sensing?	hard	4	The nanomaterial that exhibits the phenomenon of plasmon resonance, making it useful in applications like nanoscale imaging and sensing, is "nanoparticles of noble metals," such as gold and silver nanoparticles.\r\n\r\nPlasmon resonance occurs when the free electrons in noble metal nanoparticles collectively oscillate in response to incident light of a specific wavelength. This phenomenon leads to the enhancement of the electric field around the nanoparticles, resulting in intense localized electromagnetic fields, known as "surface plasmon resonance."\r\n\r\nThe strong interaction of light with noble metal nanoparticles during plasmon resonance makes them highly efficient in scattering and absorbing light. This unique property has enabled various applications in nanotechnology, including nanoscale imaging techniques like surface-enhanced Raman spectroscopy (SERS) and surface plasmon resonance spectroscopy (SPR).
-546	What is the name of the theoretical framework that seeks to reconcile gravity with the other fundamental forces and is based on the exchange of gravitons?	hard	4	The name of the theoretical framework that seeks to reconcile gravity with the other fundamental forces and is based on the exchange of gravitons is "Quantum Gravity." Quantum Gravity is a branch of theoretical physics that aims to unify the principles of quantum mechanics, which govern the behavior of particles at the smallest scales, with the theory of general relativity, which describes the force of gravity and the curvature of spacetime. Gravitons are hypothetical elementary particles that are postulated to be the carriers of the gravitational force in a quantum theory of gravity.
 547	Which organelle is responsible for the synthesis of proteins and is composed of two subunits, large and small, made up of RNA molecules and proteins?	hard	4	The organelle responsible for the synthesis of proteins is the "ribosome." Ribosomes are complex molecular machines found in the cells of all living organisms. They consist of two subunits, a larger one and a smaller one, each composed of both RNA molecules (called ribosomal RNA or rRNA) and proteins. Ribosomes play a crucial role in protein synthesis by decoding the information encoded in messenger RNA (mRNA) and using it to assemble the appropriate sequence of amino acids, which form the primary structure of proteins. This process is called translation and is essential for the functioning and maintenance of all living organisms. Ribosomes can be found free in the cytoplasm or attached to the endoplasmic reticulum in eukaryotic cells.\r\n\r\n\r\n\r\n\r\n
 549	What is the name of the region around a black hole where the gravitational pull is so strong that anything entering it is pulled irreversibly toward the singularity?	hard	4	The region around a black hole where the gravitational pull is so strong that anything entering it is pulled irreversibly toward the singularity is called the "event horizon."\r\n\r\nThe event horizon is a theoretical boundary surrounding a black hole beyond which escape becomes impossible, even for light. Once an object crosses the event horizon, it is effectively trapped within the black hole, and no information or signal from inside the event horizon can ever reach an outside observer. The event horizon marks the point of no return, where the gravitational force becomes so intense that not even light can escape from it, giving black holes their characteristic "black" appearance. Any matter or radiation that crosses the event horizon is destined to be drawn inexorably towards the singularity at the center of the black hole, where the gravitational forces are infinitely strong.
 550	Which area of the brain plays a vital role in regulating vital functions like breathing, heart rate, and blood pressure?	hard	4	The area of the brain that plays a vital role in regulating vital functions like breathing, heart rate, and blood pressure is called the "medulla oblongata."\r\n\r\nThe medulla oblongata is located in the brainstem, at the base of the brain, just above the spinal cord. It is a critical part of the central nervous system and serves as a control center for many automatic or involuntary processes that are essential for maintaining life. These functions include controlling the rhythm and depth of breathing, regulating heart rate and blood pressure, as well as other reflex actions such as coughing, sneezing, and swallowing.
 551	Which principle states that it is impossible to know both the exact position and exact momentum of a particle simultaneously with arbitrary precision?	hard	4	The principle that states that it is impossible to know both the exact position and exact momentum of a particle simultaneously with arbitrary precision is called the "Heisenberg Uncertainty Principle."\r\n\r\nThe Heisenberg Uncertainty Principle is a fundamental concept in quantum mechanics, introduced by the German physicist Werner Heisenberg in 1927. It asserts that there is a fundamental limit to the precision with which certain pairs of physical properties of a particle can be known. In the case of position and momentum, the more precisely we know the position of a particle, the less precisely we can know its momentum, and vice versa.\r\n\r\nMathematically, the Heisenberg Uncertainty Principle is expressed as follows:\r\n\r\nΔx * Δp ≥ ħ / 2\r\n\r\nwhere Δx represents the uncertainty in the particle's position, Δp represents the uncertainty in its momentum, and ħ (pronounced "h-bar") is the reduced Planck constant, a fundamental constant in quantum mechanics.
 553	Which of the following types of microorganisms are responsible for converting atmospheric nitrogen into a form that plants can use?	hard	4	The type of microorganisms that are responsible for converting atmospheric nitrogen into a form that plants can use are "Bacteria." Specifically, certain groups of bacteria, known as "nitrogen-fixing bacteria," have the ability to convert nitrogen gas (N2) from the atmosphere into a usable form called "ammonia" (NH3) through a process called "nitrogen fixation."\r\n\r\nNitrogen fixation is a critical step in the nitrogen cycle, as nitrogen gas in the atmosphere is relatively inert and cannot be directly utilized by most living organisms. Plants, in particular, require nitrogen in a more accessible form, such as ammonia, to synthesize essential molecules like proteins and nucleic acids.
-554	What is the name of the genetic engineering technique that involves the direct manipulation of an organisms genes using molecular scissors like CRISPR-Cas9?	hard	4	\r\nThe name of the genetic engineering technique that involves the direct manipulation of an organism's genes using molecular scissors like CRISPR-Cas9 is simply referred to as "CRISPR-Cas9" or "CRISPR gene editing."\r\n\r\nCRISPR-Cas9 is a revolutionary and highly efficient gene-editing tool derived from a bacterial defense mechanism against viral infections. It allows scientists to precisely target and modify specific DNA sequences within the genome of an organism. The CRISPR-Cas9 system consists of two main components: the Cas9 enzyme (molecular scissors) and a guide RNA (gRNA).\r\n\r\nThe gRNA is engineered to be complementary to the target DNA sequence of interest. When the gRNA-Cas9 complex encounters the targeted DNA, Cas9 cuts the DNA at the specific site. This cut triggers the cell's natural repair mechanisms, which can lead to the introduction of desired genetic changes, such as gene insertions, deletions, or replacements.
 555	Which process refers to the conversion of nitrogen compounds in soil into gaseous nitrogen, releasing it back into the atmosphere?	hard	4	\r\nThe process that refers to the conversion of nitrogen compounds in soil into gaseous nitrogen, releasing it back into the atmosphere, is called "denitrification."\r\n\r\nDenitrification is a microbial-driven process that occurs in soil and other environments with low oxygen levels. It involves the reduction of nitrate (NO3-) and nitrite (NO2-) ions, which are forms of inorganic nitrogen present in the soil, into gaseous nitrogen compounds like nitrous oxide (N2O) and dinitrogen gas (N2). These gaseous nitrogen compounds are then released into the atmosphere.\r\n\r\nThe denitrification process is part of the nitrogen cycle, which plays a crucial role in cycling and balancing nitrogen in ecosystems. Denitrification helps to regulate the amount of available nitrogen in the soil, prevents nitrogen accumulation, and contributes to the return of nitrogen back to the atmosphere. In agricultural settings, excessive denitrification can be a concern because it can lead to nitrogen loss from the soil, affecting soil fertility and contributing to environmental issues such as greenhouse gas emissions and water pollution.
+523	What is the force that opposes the motion of objects through a fluid (liquid or gas)?	medium	4	The force that opposes the motion of objects through a fluid (liquid or gas) is called "friction", "drag" or "fluid resistance." Drag is a frictional force that acts in the opposite direction to the motion of the object. When an object moves through a fluid, it has to push aside the fluid particles, and this interaction results in the generation of drag.\r\n\r\nThe amount of drag experienced by an object depends on several factors, such as the shape and size of the object, the speed at which it moves through the fluid, and the properties of the fluid itself (e.g., viscosity and density). For example, streamlined and aerodynamic shapes experience less drag compared to objects with irregular shapes.
+542	Which of these rocks is formed from the cooling and solidification of lava on the Earths surface?	hard	4	The type of rock that is formed from the cooling and solidification of lava on the Earth's surface is called "extrusive igneous rock." Extrusive igneous rocks are formed when lava, which is molten rock material that reaches the Earth's surface during volcanic eruptions, cools rapidly and solidifies.\r\n\r\nAs lava emerges onto the surface, it is exposed to lower temperatures and atmospheric pressure, leading to relatively quick cooling. This rapid cooling prevents the growth of large mineral crystals, resulting in fine-grained or glassy textures in the extrusive igneous rocks. Examples of extrusive igneous rocks include basalt, andesite, and rhyolite, each with distinctive mineral compositions and appearances.
+554	What is the name of the genetic engineering technique that involves the direct manipulation of an organisms genes using molecular scissors like CRISPR-Cas9?	hard	4	The name of the genetic engineering technique that involves the direct manipulation of an organism's genes using molecular scissors like CRISPR-Cas9 is simply referred to as "CRISPR-Cas9" or "CRISPR genome editing."\r\n\r\nCRISPR-Cas9 is a revolutionary and highly efficient gene-editing tool derived from a bacterial defense mechanism against viral infections. It allows scientists to precisely target and modify specific DNA sequences within the genome of an organism. The CRISPR-Cas9 system consists of two main components: the Cas9 enzyme (molecular scissors) and a guide RNA (gRNA).\r\n\r\nThe gRNA is engineered to be complementary to the target DNA sequence of interest. When the gRNA-Cas9 complex encounters the targeted DNA, Cas9 cuts the DNA at the specific site. This cut triggers the cell's natural repair mechanisms, which can lead to the introduction of desired genetic changes, such as gene insertions, deletions, or replacements.
+546	What is the name of the theoretical framework that seeks to reconcile gravity with the other fundamental forces and is based on the exchange of gravitons?	hard	4	String theory is a theoretical framework in physics that proposes that the fundamental building blocks of the universe are not point particles but tiny, vibrating strings. These strings exist in higher-dimensional spaces beyond our usual three dimensions of space and one dimension of time. The theory suggests that all the known fundamental forces, including gravity, can be described in terms of the vibrational patterns of these strings.\r\n\r\nIn the context of string theory, gravitons are hypothetical elementary particles that mediate the force of gravity, just as photons mediate the electromagnetic force. Gravitons are considered the carriers of the gravitational interaction between particles, and their exchange is the basis for understanding gravity within the framework of string theory.\r\n\r\n
+405	Which early 20th-century composer is known for his use of "tone clusters," a technique where the pianist plays a group of adjacent notes with the fist or forearm?	hard	3	Henry Cowell, an American composer born in 1897, was a prominent figure in the early 20th century experimental music scene. He developed the technique of playing tone clusters on the piano, where the pianist uses their fist or forearm to strike a group of adjacent notes simultaneously. Cowell's innovative approach to music and exploration of unconventional playing techniques greatly influenced the development of 20th-century classical music.
+398	In the opera "The Marriage of Figaro" by Mozart, which character sings the famous aria "Non più andrai" in Act 1?	hard	3	In the opera "The Marriage of Figaro" by Mozart, the character who sings the famous aria "Non più andrai" in Act 1 is Figaro himself. "Non più andrai" is an aria sung by Figaro, the witty and clever servant, in which he teases his master, Count Almaviva's page, Cherubino. In the aria, Figaro tells Cherubino that his carefree days as a young page are over, and he will now serve in the military, leaving behind his flirtatious escapades. The lively and humorous aria is one of the highlights of the opera and showcases Mozart's skill in capturing the characters' personalities through music.\r\n\r\n\r\n\r\n\r\n
 \.
 
 
@@ -2943,6 +2943,48 @@ COPY public.quiz_results (result_id, user_id, difficulty_level, score, category_
 75	14	easy	100	Music
 76	14	hard	40	Science
 77	14	hard	90	Geography
+78	98935235	easy	90	Geography
+79	98935235	easy	100	Geography
+80	98935235	medium	80	Geography
+81	98935235	hard	70	Geography
+82	98935235	easy	70	History
+83	14	medium	90	Music
+84	14	easy	60	Science
+85	14	easy	80	Science
+86	14	easy	90	Science
+87	14	medium	40	Science
+88	14	medium	50	Science
+89	14	medium	40	Science
+90	14	medium	20	Science
+91	14	medium	40	Science
+92	14	hard	30	Science
+93	14	hard	30	Science
+94	14	easy	10	Geography
+95	14	easy	10	Geography
+96	14	easy	20	Geography
+97	14	medium	50	Geography
+98	14	medium	30	Geography
+99	14	medium	20	Geography
+100	14	hard	40	Geography
+101	14	hard	50	Geography
+102	14	hard	10	Geography
+103	14	easy	30	Music
+104	14	easy	30	Music
+105	14	medium	30	Music
+106	14	medium	20	Music
+107	14	hard	10	Music
+108	14	hard	20	Music
+109	14	hard	30	Music
+110	14	hard	10	Music
+111	14	easy	10	History
+112	14	easy	40	History
+113	14	easy	40	History
+114	14	medium	60	History
+115	14	medium	20	History
+116	14	medium	10	History
+117	14	hard	20	History
+118	14	hard	30	History
+119	14	hard	30	History
 \.
 
 
@@ -2971,6 +3013,8 @@ COPY public.users (user_id, username, email, password) FROM stdin;
 4496	fernandu	mail@mail.com	$2b$10$JoE3WPSu.96oWfspVKI3VeuvbTbRNTwZS0D1IboaS6Hj9QIGG4ka2
 9227	seila	mail@mail.com	$2b$10$a2FD4bj5m/9eqdAJGXLkLunhQdYxPKaIU8YhyfOGSonFSPgtvHh16
 42157957	titititi	mail@mail.com	$2b$10$0ZUWjRn8GxCeT02T/3mx4.C5VYSZJieszs0Pbciq7.npFunDI.Kgu
+98935235	PedroDSimoes	pedrobh91@gmail.com	$2b$10$dL8ePOWh94WgCeAewSeEKulpf0l0jXAMO27WBS2LbPe2mPOIAWKZi
+34887941	rrrrrr	mail@mail.com	$2b$10$d/2q2ZxuxiWRHIuC.JZFzeilJB6NO2NvYyxOTMl0ETC5YmbGo6JqS
 \.
 
 
@@ -2978,7 +3022,7 @@ COPY public.users (user_id, username, email, password) FROM stdin;
 -- Name: quiz_results_result_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.quiz_results_result_id_seq', 77, true);
+SELECT pg_catalog.setval('public.quiz_results_result_id_seq', 119, true);
 
 
 --

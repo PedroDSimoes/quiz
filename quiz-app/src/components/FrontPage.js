@@ -26,6 +26,14 @@ const FrontPage = () => {
     if (registrationPassword !== confirmPassword) {
       setRegistrationError('Passwords do not match.');
       return;
+      
+      
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(registrationEmail)) {
+      setRegistrationError('Please enter a valid email address.');
+      return;
     }
 
     axios
